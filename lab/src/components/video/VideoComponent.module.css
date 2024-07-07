@@ -1,0 +1,16 @@
+.video_wrapper {
+  width: 100vw;
+  height: calc(calc(var(--vh, 1vh) * 100) - 5rem);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  .video {
+    height: 100%;
+
+    object-fit: cover;
+  }
+}

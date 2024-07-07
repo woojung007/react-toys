@@ -1,0 +1,85 @@
+.wrapper {
+  background: #f9f9f9;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 30px;
+
+  padding: 20px;
+
+  position: relative;
+
+  .btn_wrapper {
+    width: 100%;
+
+    position: absolute;
+    bottom: 100px;
+
+    z-index: 100;
+
+    .btn1 {
+      width: 20%;
+      height: 40px;
+
+      background-color: #87787854;
+      font-weight: 700;
+    }
+  }
+
+  .popup {
+    width: 300px;
+    height: 70%;
+
+    border: 3px solid #eaeaea;
+    background-color: #f1f1f1;
+
+    padding: 20px;
+
+    position: absolute;
+    top: 0;
+
+    animation-duration: 0.5s;
+
+    z-index: 200;
+
+    display: none;
+
+    &.visible {
+      border: 3px solid olive;
+      display: block;
+      animation: slideIn 1s forwards;
+    }
+
+    &.hidden {
+      border: 3px solid lightcoral;
+      display: block;
+      animation: slideOut 1s forwards;
+    }
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(10%);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateY(10%);
+  }
+  to {
+    transform: translateY(200%);
+  }
+}

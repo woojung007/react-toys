@@ -1,0 +1,17 @@
+export const imagePaths = [
+  "https://resource.platform.dabeeo.xyz/sandbox/public/content/A8E9-20231108-121125-999.jpg",
+  "https://resource.platform.dabeeo.xyz/sandbox/public/content/AC27-20231109-120220-180.jpg",
+  "https://resource.platform.dabeeo.xyz/sandbox/public/content/67DB-20231108-120256-980.png",
+  "https://resource.platform.dabeeo.xyz/sandbox/public/content/8E2B-20231108-120320-378.jpg",
+  "https://resource.platform.dabeeo.xyz/sandbox/public/content/DD79-20231109-120122-013.jpg",
+  "https://resource.platform.dabeeo.xyz/sandbox/public/content/C505-20231108-120310-138.png",
+  "https://resource.platform.dabeeo.xyz/sandbox/public/content/DA74-20231109-115849-647.jpg",
+  "https://resource.platform.dabeeo.xyz/sandbox/public/content/4A8C-20231108-120245-530.png",
+  "https://resource.platform.dabeeo.xyz/sandbox/public/content/654E-20231108-120227-976.jpg",
+  "https://resource.platform.dabeeo.xyz/sandbox/public/content/00BB-20231108-120209-883.jpg",
+  "https://resource.platform.dabeeo.xyz/sandbox/public/content/E7F4-20231108-120146-501.jpg",
+  "https://resource.platform.dabeeo.xyz/sandbox/public/content/8143-20231108-120121-268.jpg",
+  "https://resource.platform.dabeeo.xyz/sandbox/public/content/CDB7-20231108-120043-951.jpg",
+  "https://resource.platform.dabeeo.xyz/sandbox/public/content/B0AD-20231108-120029-173.jpg",
+  "https://resource.platform.dabeeo.xyz/sandbox/public/content/0FFD-20231108-120105-486.png",
+];

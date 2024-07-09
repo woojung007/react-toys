@@ -1,0 +1,25 @@
+.wrapper {
+  width: 100%;
+
+  border: 2px solid #3498db;
+
+  .floor {
+    color: #666;
+    font-weight: 500;
+
+    width: 100px;
+    height: 100px;
+
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &.active {
+      color: #fff;
+      font-weight: 700;
+
+      background-color: #3498db;
+    }
+  }
+}

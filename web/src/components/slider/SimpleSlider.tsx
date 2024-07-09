@@ -14,8 +14,29 @@ export default function SimpleSlider() {
   const [currentFloor, setCurrentFloor] = useState<Floor>(floors[0]);
   const [mainSlide, setMainSlide] = useState<Slider | null>(null);
   const [activeSlide, setActiveSlide] = useState<number | undefined>();
-  const [hasMoreUp, setHasMoreUp] = useState<number | undefined>();
-  const [hasMoreDown, setHasMoreDown] = useState<number | undefined>();
+  const [hasUpSlide, setHasUpSlide] = useState<boolean>(true);
+  const [hasDownSlide, setHasDownSlide] = useState<boolean>(true);
+
+  const handleSlideDisabled = (slideIndex: number) => {
+    if (slideIndex === 0) {
+      setHasUpSlide(false);
+      return;
+    }
+
+    if (slideIndex === slide.length - 5) {
+      setHasDownSlide(false);
+      return;
+    }
+
+    setHasUpSlide(true);
+    setHasDownSlide(true);
+  };
+
+  useEffect(() => {
+    if (typeof activeSlide === "number") {
+      handleSlideDisabled(activeSlide);
+    }
+  }, [activeSlide]);
 
   useEffect(() => {
     const reveredOrderedFloors = floors.map((floor, index) => ({
@@ -54,6 +75,8 @@ export default function SimpleSlider() {
 
     beforeChange: function (currentStartIndex: number, nextStartIndex: number) {
       console.log("before change", currentStartIndex, nextStartIndex);
+
+      handleSlideDisabled(nextStartIndex);
     },
 
     afterChange: function (currentStartIndex: number) {
@@ -81,7 +104,12 @@ export default function SimpleSlider() {
 
   return (
     <div className={styles.wrapper}>
-      <button className="button" onClick={onClickUp}>
+      <button
+        className={`${styles.arrow_btn} ${!hasUpSlide && styles.disabled}`}
+        disabled={!hasUpSlide}
+        type="button"
+        onClick={onClickUp}
+      >
         위층
       </button>
       <Slider
@@ -105,11 +133,14 @@ export default function SimpleSlider() {
       </Slider>
 
       {/* 버튼 */}
-      <div style={{ textAlign: "center" }}>
-        <button className="button" onClick={onClickDown}>
-          아래층
-        </button>
-      </div>
+      <button
+        className={`${styles.arrow_btn} ${!hasDownSlide && styles.disabled}`}
+        disabled={!hasDownSlide}
+        type="button"
+        onClick={onClickDown}
+      >
+        아래층
+      </button>
     </div>
   );
 }

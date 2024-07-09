@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Slider, { Settings } from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
@@ -10,10 +10,32 @@ import SliderDownArrow from "./SliderDownArrow";
 import SliderUpArrow from "./SliderUpArrow";
 
 export default function SimpleSlider() {
-  const [currentFloor, setCurrentFloor] = useState<Floor>(floors[6]);
+  const [slide, setSlide] = useState<Floor[]>([]);
+  const [currentFloor, setCurrentFloor] = useState<Floor>(floors[0]);
   const [mainSlide, setMainSlide] = useState<Slider | null>(null);
+  const [activeSlide, setActiveSlide] = useState<number | undefined>();
+  const [hasMoreUp, setHasMoreUp] = useState<number | undefined>();
+  const [hasMoreDown, setHasMoreDown] = useState<number | undefined>();
+
+  useEffect(() => {
+    const reveredOrderedFloors = floors.map((floor, index) => ({
+      ...floor,
+      order: index,
+    }));
+    // .reverse();
+
+    setSlide([...reveredOrderedFloors]);
+    setCurrentFloor(reveredOrderedFloors[7]);
+    // setActiveSlide((7 % 5) + 3); // <- 이렇게 하면 onChange 가 제대로 안먹음
+    setActiveSlide(7);
+  }, []);
+
+  useEffect(() => {
+    console.log(activeSlide);
+  }, [activeSlide]);
 
   const settings: Settings = {
+    arrows: false,
     dots: false,
     infinite: false,
     speed: 500,
@@ -24,15 +46,18 @@ export default function SimpleSlider() {
     vertical: true,
     // verticalSwiping: true,
     // swipeToSlide: true,
-
-    prevArrow: <SliderUpArrow className="prev" />,
+    // centerMode: true,
+    // centerPadding: "10px",
+    // initialSlide: 11,
+    prevArrow: <SliderUpArrow />,
     nextArrow: <SliderDownArrow />,
 
-    beforeChange: function (currentSlide: any, nextSlide: any) {
-      console.log("before change", currentSlide, nextSlide);
+    beforeChange: function (currentStartIndex: number, nextStartIndex: number) {
+      console.log("before change", currentStartIndex, nextStartIndex);
     },
-    afterChange: function (currentSlide: any) {
-      console.log("after change", currentSlide);
+
+    afterChange: function (currentStartIndex: number) {
+      console.log("after change", currentStartIndex);
     },
   };
 
@@ -50,7 +75,7 @@ export default function SimpleSlider() {
   // 아래로
   const onClickDown = () => {
     if (mainSlide) {
-      mainSlide?.slickNext();
+      mainSlide.slickNext();
     }
   };
 
@@ -59,12 +84,16 @@ export default function SimpleSlider() {
       <button className="button" onClick={onClickUp}>
         위층
       </button>
-      <Slider ref={(slider) => setMainSlide(slider)} {...settings}>
-        {floors.map((floor: Floor) => (
+      <Slider
+        initialSlide={activeSlide} // 내부적으로 undefined 만 검사함
+        ref={(slider) => setMainSlide(slider)}
+        {...settings}
+      >
+        {slide.map((floor: Floor) => (
           <div
             key={floor.id}
             className={`${styles.floor} ${
-              floor.id === currentFloor.id && styles.active
+              floor.id === currentFloor?.id && styles.active
             }`}
             onClick={() => {
               onClickFloor(floor);

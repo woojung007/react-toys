@@ -1,0 +1,18 @@
+@import "../styles/import";
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.unordered_list {
+  li {
+    list-style-type: disc;
+    list-style-type: circle;
+    list-style-type: square;
+    list-style-type: decimal;
+    list-style-type: georgian;
+    list-style-type: trad-chinese-informal;
+    list-style-type: kannada;
+  }
+}

@@ -9,6 +9,7 @@ import AntdChartPage from "pages/chart/AntdChartPage";
 import CssPage from "pages/css/CssPage";
 import InfiniteScrollPage from "pages/infinite-scroll/InfiniteScrollPage";
 import MotionPage from "pages/motion/MotionPage";
+import MotionPermission from "pages/permission/MotionPermission";
 import SharePage from "pages/share/SharePage";
 import SwiperPage from "pages/swiper/SwiperPage";
 import ThumbnailPage from "pages/thumbnail/ThumbnailPage";
@@ -39,7 +40,7 @@ function App() {
     <div className="App">
       <div className="app_body">
         <Routes>
-          <Route path="/" element={<TodoApp />} />
+          <Route path="/" element={<MotionPermission />} />
           <Route path="/todo" element={<TodoApp />} />
           <Route path="/share" element={<SharePage />} />
           <Route path="/chart" element={<AntdChartPage />} />

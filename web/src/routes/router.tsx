@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
-import HtmlPage from "../pages/HtmlPage";
 import FloorSliderPage from "../pages/FloorSliderPage";
+import HtmlPage from "../pages/HtmlPage";
 import JavaScriptPage from "../pages/JavaScriptPage";
+import SignUpPage from "../pages/SignUpPage";
 
 export const router = createBrowserRouter([
   {
@@ -15,5 +16,9 @@ export const router = createBrowserRouter([
   {
     path: "/floor-slider",
     element: <FloorSliderPage />,
+  },
+  {
+    path: "/sign-up",
+    element: <SignUpPage />,
   },
 ]);

@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { FieldErrors, useForm } from "react-hook-form";
 
 interface FormData {
   username: string;
@@ -14,16 +14,33 @@ const SignUpPage = () => {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    mode: "onChange", // 입력 시마다 유효성 검사를 즉시 수행
+  });
 
+  /**
+   * 성공했을 경우
+   * @param data
+   */
   const onSubmit = (data: FormData) => {
     console.log("회원가입 정보:", data);
   };
 
+  /**
+   * 실패했을 경우
+   * @param errors
+   */
+  const onError = (errors: FieldErrors<FormData>) => {
+    const formData = watch(); // 현재 폼 데이터를 가져온다.
+    console.log("유효성 검사 실패:", formData);
+    console.log("에러:", errors);
+  };
+
+  // 비밀번호 확인 필드에서 사용자가 입력한 비밀번호와 기존 비밀번호가 일치하는지 검증하기 위해 비밀번호를 계속 확인한다.
   const password = watch("password");
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit, onError)}>
       <div>
         <label>아이디</label>
         <input

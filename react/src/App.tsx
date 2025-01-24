@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import CssPage from './react-css/CssPage';
+import Register from 'one-bite/Register';
 import { RecoilRoot } from 'recoil';
 
 const queryClient = new QueryClient();
@@ -9,7 +9,7 @@ const App = () => {
     return (
         <QueryClientProvider client={queryClient}>
             <RecoilRoot>
-                <CssPage />
+                <Register />
             </RecoilRoot>
             <ReactQueryDevtools initialIsOpen={true} />
         </QueryClientProvider>

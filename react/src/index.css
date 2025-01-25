@@ -22,27 +22,6 @@ code {
     box-sizing: border-box;
 }
 
-/* a {
-    color: inherit;
-    text-decoration: none;
-} */
-
-/* button {
-    cursor: pointer;
-    border: none;
-    outline: none;
-    background-color: transparent;
-} */
-
-/* input,
-input:focus,
-input::placeholder {
-    outline: none;
-    border: none;
-
-    font-size: 1.2rem;
-} */
-
 ul,
 li {
     cursor: pointer;

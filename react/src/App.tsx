@@ -1,14 +1,12 @@
-import './App.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import MainProducts from 'React-23/libraries/query/components/MainProducts';
+import React from 'react';
 
 const queryClient = new QueryClient();
 
 const App = () => {
     return (
         <QueryClientProvider client={queryClient}>
-            <MainProducts />
             <ReactQueryDevtools initialIsOpen={true} />
         </QueryClientProvider>
     );

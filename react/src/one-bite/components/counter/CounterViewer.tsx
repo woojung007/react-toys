@@ -1,8 +1,8 @@
-export default function CounterViewer() {
+export default function CounterViewer({ count }: { count: number }) {
     return (
         <div>
             <div>현재 카운트 : </div>
-            <h1>0</h1>
+            <h1>{count}</h1>
         </div>
     );
 }

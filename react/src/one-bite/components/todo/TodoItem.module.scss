@@ -1,0 +1,30 @@
+.todo_item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgb(240, 240, 240);
+
+    .item_checkbox {
+        width: 20px;
+    }
+
+    .content {
+        flex: 1;
+        font-size: 16px;
+    }
+
+    .date {
+        font-size: 14px;
+        color: gray;
+    }
+
+    button {
+        cursor: pointer;
+        color: gray;
+        font-size: 14px;
+        border: none;
+        border-radius: 5px;
+        padding: 5px;
+    }
+}

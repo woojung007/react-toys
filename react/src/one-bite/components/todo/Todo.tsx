@@ -3,8 +3,9 @@ import TodoHeader from 'one-bite/components/todo/TodoHeader';
 import TodoList from 'one-bite/components/todo/TodoList';
 import styles from './Todo.module.scss';
 import { useRef, useState } from 'react';
+import { TodoObject } from 'one-bite/components/todo/Todo.type';
 
-const mockData = [
+const mockData: TodoObject[] = [
     {
         id: 0,
         isDone: false,
@@ -26,7 +27,7 @@ const mockData = [
 ];
 
 export default function Todo() {
-    const [todos, setTodos] = useState(mockData);
+    const [todos, setTodos] = useState<TodoObject[]>(mockData);
     const idRef = useRef(3);
 
     const onCreate = (content: string) => {
@@ -43,7 +44,7 @@ export default function Todo() {
         <div className={styles.todo_app}>
             <TodoHeader />
             <TodoEditor onCreate={onCreate} />
-            <TodoList />
+            <TodoList todos={todos} />
         </div>
     );
 }

@@ -40,11 +40,20 @@ export default function Todo() {
 
         setTodos((prev) => [newTodo, ...prev]);
     };
+
+    const onUpdate = (targetId: number) => {
+        setTodos((prev) =>
+            prev.map(
+                //
+                (todo) => (todo.id === targetId ? { ...todo, isDone: !todo.isDone } : todo),
+            ),
+        );
+    };
     return (
         <div className={styles.todo_app}>
             <TodoHeader />
             <TodoEditor onCreate={onCreate} />
-            <TodoList todos={todos} />
+            <TodoList todos={todos} onUpdate={onUpdate} />
         </div>
     );
 }

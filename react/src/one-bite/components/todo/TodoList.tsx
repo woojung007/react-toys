@@ -6,9 +6,10 @@ import { ChangeEvent, useState } from 'react';
 type Props = {
     todos: TodoObject[];
     onUpdate: (targetId: number) => void;
+    onDelete: (targetId: number) => void;
 };
 
-export default function TodoList({ todos, onUpdate }: Props) {
+export default function TodoList({ todos, onUpdate, onDelete }: Props) {
     const [search, setSearch] = useState('');
 
     const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +31,7 @@ export default function TodoList({ todos, onUpdate }: Props) {
 
             <div className={styles.todos_wrapper}>
                 {filteredTodos.map((todo) => (
-                    <TodoItem key={todo.id} todo={todo} onUpdate={onUpdate} />
+                    <TodoItem key={todo.id} todo={todo} onUpdate={onUpdate} onDelete={onDelete} />
                 ))}
             </div>
         </div>

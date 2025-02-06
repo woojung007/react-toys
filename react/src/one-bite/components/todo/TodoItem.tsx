@@ -4,8 +4,9 @@ import styles from './TodoItem.module.scss';
 type Props = {
     todo: TodoObject;
     onUpdate: (targetId: number) => void;
+    onDelete: (targetId: number) => void;
 };
-export default function TodoItem({ todo, onUpdate }: Props) {
+export default function TodoItem({ todo, onUpdate, onDelete }: Props) {
     return (
         <div className={styles.todo_item}>
             <input
@@ -19,7 +20,13 @@ export default function TodoItem({ todo, onUpdate }: Props) {
             />
             <div className={styles.content}>{todo.content}</div>
             <div className={styles.date}>{new Date(todo.date).toDateString()}</div>
-            <button>삭제</button>
+            <button
+                onClick={() => {
+                    onDelete(todo.id);
+                }}
+            >
+                삭제
+            </button>
         </div>
     );
 }

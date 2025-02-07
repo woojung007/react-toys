@@ -4,6 +4,7 @@ import TodoList from 'one-bite/components/todo/TodoList';
 import styles from './Todo.module.scss';
 import { useRef, useState } from 'react';
 import { TodoObject } from 'one-bite/components/todo/Todo.type';
+import ReducerExam from 'one-bite/components/basic/ReducerExam';
 
 const mockData: TodoObject[] = [
     {
@@ -55,9 +56,11 @@ export default function Todo() {
     };
     return (
         <div className={styles.todo_app}>
-            <TodoHeader />
+            {/* <TodoHeader />
             <TodoEditor onCreate={onCreate} />
-            <TodoList todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
+            <TodoList todos={todos} onUpdate={onUpdate} onDelete={onDelete} /> */}
+
+            <ReducerExam />
         </div>
     );
 }

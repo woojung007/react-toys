@@ -2,7 +2,7 @@ import TodoEditor from 'one-bite/components/todo/TodoEditor';
 import TodoHeader from 'one-bite/components/todo/TodoHeader';
 import TodoList from 'one-bite/components/todo/TodoList';
 import styles from './Todo.module.scss';
-import { useRef, useState } from 'react';
+import { useReducer, useRef, useState } from 'react';
 import { TodoObject } from 'one-bite/components/todo/Todo.type';
 import ReducerExam from 'one-bite/components/basic/ReducerExam';
 
@@ -27,40 +27,75 @@ const mockData: TodoObject[] = [
     },
 ];
 
+type TodoAction = 'CREATE' | 'UPDATE' | 'DELETE';
+
+function reducer(state: TodoObject[], action: { type: TodoAction; data?: TodoObject; targetId?: number }) {
+    switch (action.type) {
+        case 'CREATE':
+            if (!action.data) return state;
+            return [action.data, ...state];
+        case 'UPDATE':
+            return state.map((item) => (item.id === action.targetId ? { ...item, isDone: !item.isDone } : item));
+        case 'DELETE':
+            return state.filter((item) => item.id !== action.targetId);
+        default:
+            return state;
+    }
+}
+
 export default function Todo() {
-    const [todos, setTodos] = useState<TodoObject[]>(mockData);
+    // const [todos, setTodos] = useState<TodoObject[]>(mockData);
+    const [todos, dispatch] = useReducer(reducer, mockData);
     const idRef = useRef(3);
 
     const onCreate = (content: string) => {
-        const newTodo = {
-            id: idRef.current++,
-            isDone: false,
-            content,
-            date: new Date().getTime(),
-        };
+        // const newTodo = {
+        //     id: idRef.current++,
+        //     isDone: false,
+        //     content,
+        //     date: new Date().getTime(),
+        // };
+        // setTodos((prev) => [newTodo, ...prev]);
 
-        setTodos((prev) => [newTodo, ...prev]);
+        dispatch({
+            type: 'CREATE',
+            data: {
+                id: idRef.current++,
+                isDone: false,
+                content: content,
+                date: new Date().getTime(),
+            },
+        });
     };
 
     const onUpdate = (targetId: number) => {
-        setTodos((prev) =>
-            prev.map(
-                //
-                (todo) => (todo.id === targetId ? { ...todo, isDone: !todo.isDone } : todo),
-            ),
-        );
+        // setTodos((prev) =>
+        //     prev.map(
+        //         (todo) => (todo.id === targetId ? { ...todo, isDone: !todo.isDone } : todo),
+        //     ),
+        // );
+
+        dispatch({
+            type: 'UPDATE',
+            targetId: targetId,
+        });
     };
 
     const onDelete = (targetId: number) => {
-        setTodos((prev) => prev.filter((todo) => todo.id !== targetId));
+        // setTodos((prev) => prev.filter((todo) => todo.id !== targetId));
+
+        dispatch({
+            type: 'DELETE',
+            targetId: targetId,
+        });
     };
     return (
         <div className={styles.todo_app}>
-            {/* <TodoHeader />
+            <TodoHeader />
             <TodoEditor onCreate={onCreate} />
-            <TodoList todos={todos} onUpdate={onUpdate} onDelete={onDelete} /> */}
+            <TodoList todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
 
-            <ReducerExam />
+            {/* <ReducerExam /> */}
         </div>
     );
 }

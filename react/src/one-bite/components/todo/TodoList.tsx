@@ -24,9 +24,29 @@ export default function TodoList({ todos, onUpdate, onDelete }: Props) {
     };
 
     const filteredTodos = getFilteredData();
+
+    const getAnalyzedData = () => {
+        const totalCount = todos.length;
+        const doneCount = todos.filter((todo) => todo.isDone).length;
+        const notDoneCOunt = totalCount - doneCount;
+
+        return {
+            totalCount,
+            doneCount,
+            notDoneCOunt,
+        };
+    };
+
+    const { totalCount, doneCount, notDoneCOunt } = getAnalyzedData();
+
     return (
         <div className={styles.todo_list}>
             <h4>Todo List 🌱</h4>
+            <div>
+                <div>total : {totalCount}</div>
+                <div>done : {doneCount}</div>
+                <div>notDone : {notDoneCOunt}</div>
+            </div>
             <input value={search} onChange={onChangeSearch} type='text' placeholder='검색어를 입력하세요' />
 
             <div className={styles.todos_wrapper}>

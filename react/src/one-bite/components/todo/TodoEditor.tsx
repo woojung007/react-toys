@@ -1,11 +1,14 @@
 import { ChangeEvent, useRef, useState } from 'react';
 import styles from './TodoEditor.module.scss';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     onCreate: (content: string) => void;
 };
 
 export default function TodoEditor({ onCreate }: Props) {
+    const { t } = useTranslation();
+
     const [content, setContent] = useState('');
     const contentRef = useRef<HTMLInputElement>(null);
 
@@ -36,9 +39,9 @@ export default function TodoEditor({ onCreate }: Props) {
                 onChange={onChangeContent}
                 type='text'
                 onKeyDown={onKeyDown}
-                placeholder='새로운 Todo...'
+                placeholder={t('todo.editor.placeholder')}
             />
-            <button onClick={onSubmit}>추가</button>
+            <button onClick={onSubmit}>{t('todo.editor.add')}</button>
         </div>
     );
 }

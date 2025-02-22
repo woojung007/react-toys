@@ -5,6 +5,7 @@ import styles from './Todo.module.scss';
 import { useReducer, useRef, useState } from 'react';
 import { TodoObject } from 'one-bite/components/todo/Todo.type';
 import ReducerExam from 'one-bite/components/basic/ReducerExam';
+import { changeLanguage } from 'utils/language';
 
 const mockData: TodoObject[] = [
     {
@@ -89,8 +90,13 @@ export default function Todo() {
             targetId: targetId,
         });
     };
+
     return (
         <div className={styles.todo_app}>
+            <div>
+                <button onClick={() => changeLanguage('ko')}>한국어</button>
+                <button onClick={() => changeLanguage('en')}>영어</button>
+            </div>
             <TodoHeader />
             <TodoEditor onCreate={onCreate} />
             <TodoList todos={todos} onUpdate={onUpdate} onDelete={onDelete} />

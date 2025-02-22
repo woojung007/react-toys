@@ -1,7 +1,8 @@
-import TodoItem from 'one-bite/components/todo/TodoItem';
-import styles from './TodoList.module.scss';
 import { TodoObject } from 'one-bite/components/todo/Todo.type';
+import TodoItem from 'one-bite/components/todo/TodoItem';
 import { ChangeEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import styles from './TodoList.module.scss';
 
 type Props = {
     todos: TodoObject[];
@@ -11,6 +12,8 @@ type Props = {
 
 export default function TodoList({ todos, onUpdate, onDelete }: Props) {
     const [search, setSearch] = useState('');
+
+    const { t } = useTranslation();
 
     const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);
@@ -41,13 +44,19 @@ export default function TodoList({ todos, onUpdate, onDelete }: Props) {
 
     return (
         <div className={styles.todo_list}>
-            <h4>Todo List 🌱</h4>
+            <h4>{t('todo.list.title')} 🌱</h4>
             <div>
-                <div>total : {totalCount}</div>
-                <div>done : {doneCount}</div>
-                <div>notDone : {notDoneCOunt}</div>
+                <div>
+                    {t('todo.list.total')} : {totalCount}
+                </div>
+                <div>
+                    {t('todo.list.done')} : {doneCount}
+                </div>
+                <div>
+                    {t('todo.list.notDone')} : {notDoneCOunt}
+                </div>
             </div>
-            <input value={search} onChange={onChangeSearch} type='text' placeholder='검색어를 입력하세요' />
+            <input value={search} onChange={onChangeSearch} type='text' placeholder={t('todo.list.placeholder')} />
 
             <div className={styles.todos_wrapper}>
                 {filteredTodos.map((todo) => (

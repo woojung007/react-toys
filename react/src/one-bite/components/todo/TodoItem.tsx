@@ -1,4 +1,5 @@
 import { TodoObject } from 'one-bite/components/todo/Todo.type';
+import { useTranslation } from 'react-i18next';
 import styles from './TodoItem.module.scss';
 
 type Props = {
@@ -7,6 +8,8 @@ type Props = {
     onDelete: (targetId: number) => void;
 };
 export default function TodoItem({ todo, onUpdate, onDelete }: Props) {
+    const { t } = useTranslation();
+
     return (
         <div className={styles.todo_item}>
             <input
@@ -25,7 +28,7 @@ export default function TodoItem({ todo, onUpdate, onDelete }: Props) {
                     onDelete(todo.id);
                 }}
             >
-                삭제
+                {t('todo.list.delete')}
             </button>
         </div>
     );

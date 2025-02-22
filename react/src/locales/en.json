@@ -1,0 +1,21 @@
+{
+    "translation": {
+        "todo": {
+            "header": {
+                "today": "Today"
+            },
+            "editor": {
+                "placeholder": "New Todo...",
+                "add": "Add"
+            },
+            "list": {
+                "title": "Todo List",
+                "total": "Total",
+                "done": "Done",
+                "notDone": "Not Done",
+                "placeholder": "Please enter a search term",
+                "delete": "Delete"
+            }
+        }
+    }
+}

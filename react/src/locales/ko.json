@@ -1,0 +1,21 @@
+{
+    "translation": {
+        "todo": {
+            "header": {
+                "today": "오늘은"
+            },
+            "editor": {
+                "placeholder": "새로운 Todo...",
+                "add": "추가"
+            },
+            "list": {
+                "title": "할일 목록",
+                "total": "전체",
+                "done": "완료",
+                "notDone": "남은 할일",
+                "placeholder": "검색어를 입력하세요",
+                "delete": "삭제"
+            }
+        }
+    }
+}

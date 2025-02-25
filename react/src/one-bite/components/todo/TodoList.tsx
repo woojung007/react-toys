@@ -1,6 +1,6 @@
 import { TodoObject } from 'one-bite/components/todo/Todo.type';
 import TodoItem from 'one-bite/components/todo/TodoItem';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './TodoList.module.scss';
 
@@ -28,7 +28,7 @@ export default function TodoList({ todos, onUpdate, onDelete }: Props) {
 
     const filteredTodos = getFilteredData();
 
-    const getAnalyzedData = () => {
+    const { totalCount, doneCount, notDoneCOunt } = useMemo(() => {
         const totalCount = todos.length;
         const doneCount = todos.filter((todo) => todo.isDone).length;
         const notDoneCOunt = totalCount - doneCount;
@@ -38,9 +38,7 @@ export default function TodoList({ todos, onUpdate, onDelete }: Props) {
             doneCount,
             notDoneCOunt,
         };
-    };
-
-    const { totalCount, doneCount, notDoneCOunt } = getAnalyzedData();
+    }, [todos]);
 
     return (
         <div className={styles.todo_list}>

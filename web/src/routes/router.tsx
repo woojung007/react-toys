@@ -3,6 +3,7 @@ import FloorSliderPage from "../pages/FloorSliderPage";
 import HtmlPage from "../pages/HtmlPage";
 import JavaScriptPage from "../pages/JavaScriptPage";
 import SignUpPage from "../pages/SignUpPage";
+import CssPage from "../pages/CssPage";
 
 export const router = createBrowserRouter([
   {
@@ -24,5 +25,9 @@ export const router = createBrowserRouter([
   {
     path: "/sign-up",
     element: <SignUpPage />,
+  },
+  {
+    path: "/css",
+    element: <CssPage />,
   },
 ]);

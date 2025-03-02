@@ -1,0 +1,24 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "name": "Example Polygon"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [127.0, 37.0],
+            [127.1, 37.0],
+            [127.1, 37.1],
+            [127.0, 37.1],
+            [127.0, 37.0]
+          ]
+        ]
+      }
+    }
+  ]
+}

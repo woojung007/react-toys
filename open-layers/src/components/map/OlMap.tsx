@@ -1,19 +1,12 @@
 import { Map, View } from 'ol'
 import TileLayer from 'ol/layer/Tile'
 import 'ol/ol.css'
+import { fromLonLat } from 'ol/proj'
 import XYZ from 'ol/source/XYZ'
 import { useEffect, useRef } from 'react'
 import styles from './OlMap.module.scss'
-// === WebGL 벡터 레이어 관련 ===
-import { Feature } from 'ol'
-import Polygon from 'ol/geom/Polygon'
-import VectorLayer from 'ol/layer/Vector'
-import { fromLonLat } from 'ol/proj'
-import VectorSource from 'ol/source/Vector'
-import Fill from 'ol/style/Fill'
-import Stroke from 'ol/style/Stroke'
-import Style from 'ol/style/Style'
-import { drawLandLayer } from 'utils/drawLand'
+import { drawGeoJson } from 'utils/drawGeoJson'
+import { drawVectorLayer } from 'utils/drawVectorLayer'
 
 export default function OlMap() {
   const mapRef = useRef<Map | null>(null)
@@ -28,17 +21,21 @@ export default function OlMap() {
       }),
     })
 
+    const landLayer = drawGeoJson('/data/land-korea.geojson')
+
     // 2) OpenLayers Map 생성
     const mapObject = new Map({
       target: 'map',
-      layers: [osmTileLayer],
+      // layers: [osmTileLayer],
+      layers: [osmTileLayer, landLayer],
       view: new View({
-        center: [0, 0], // EPSG:3857 기준
-        zoom: 2,
+        // center: [0,0], // EPSG:3857 기준
+        center: fromLonLat([127, 37]), // EPSG:3857 변환된 대략 한반도 중심
+        zoom: 7,
       }),
     })
 
-    drawLandLayer(mapObject)
+    drawVectorLayer(mapObject)
 
     mapRef.current = mapObject
   }, [])

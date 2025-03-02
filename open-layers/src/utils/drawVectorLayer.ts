@@ -7,28 +7,28 @@ import Fill from 'ol/style/Fill'
 import Stroke from 'ol/style/Stroke'
 import Style from 'ol/style/Style'
 
-export function drawLandLayer(olMap: Map) {
-  // 3) 폴리곤(예: 토지) Feature 생성
-  //    실제 좌표는 GeoJSON 등이 있을 수 있지만, 여기선 예시로 사각형 하나
+export function drawVectorLayer(olMap: Map) {
+  // 경기도 인근에 해당하는 경·위도 사각형 예시
+  // (126.8, 37.4) ~ (127.2, 37.8) 대략 범위
   const landCoords = [
-    fromLonLat([-5, 30]),
-    fromLonLat([0, 30]),
-    fromLonLat([0, 35]),
-    fromLonLat([-5, 35]),
-    fromLonLat([-5, 30]), // 폴리곤 닫기
+    fromLonLat([126.8, 37.4]),
+    fromLonLat([127.2, 37.4]),
+    fromLonLat([127.2, 37.8]),
+    fromLonLat([126.8, 37.8]),
+    fromLonLat([126.8, 37.4]), // 폴리곤 닫기
   ]
-  const landFeature = new Feature({
+  const feature = new Feature({
     geometry: new Polygon([landCoords]),
   })
 
   // 4) VectorSource 생성 (Feature 추가)
-  const landSource = new VectorSource({
-    features: [landFeature],
+  const source = new VectorSource({
+    features: [feature],
   })
 
   // 5) VectorLayer 생성 + 스타일 지정
-  const landLayer = new VectorLayer({
-    source: landSource,
+  const layer = new VectorLayer({
+    source: source,
     style: new Style({
       fill: new Fill({
         color: 'rgba(255, 0, 0, 0.4)', // 반투명 빨강
@@ -41,10 +41,10 @@ export function drawLandLayer(olMap: Map) {
   })
 
   // 6) 맵에 추가
-  olMap.addLayer(landLayer)
+  olMap.addLayer(layer)
 
   // 7) 폴리곤이 화면에 잘 보이도록 fit
-  olMap.getView().fit(landFeature.getGeometry()!.getExtent(), {
+  olMap.getView().fit(feature.getGeometry()!.getExtent(), {
     padding: [50, 50, 50, 50],
     duration: 1000,
   })

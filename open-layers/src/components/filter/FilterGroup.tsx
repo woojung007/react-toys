@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import useFilterChild from "hooks/useFilterChild";
-import styles from "./FilterGroup.module.scss";
-import { FilterGroupProps } from "components/filter/FilterGroup.type";
+import useFilterChild from 'hooks/useFilterChild'
+import styles from './FilterGroup.module.scss'
+import { FilterGroupProps } from 'components/filter/FilterGroup.type'
 
 export default function FilterGroup({
   filterGroup,
@@ -18,10 +17,10 @@ export default function FilterGroup({
     isChildSelectAll,
     setChildrenAllSelect,
     updateFilterDatas,
-  });
+  })
 
   return (
-    <div className={styles["filter-row__container"]}>
+    <div className={styles['filter-row__container']}>
       {/* 전체(제목) */}
       {/* <Checkbox
                 disabled={filterOptions.disabled}
@@ -34,7 +33,7 @@ export default function FilterGroup({
       <div>{filterGroup.label}</div>
 
       {/* 자식 */}
-      <div className={styles["filter-row-values__wrap"]}>
+      <div className={styles['filter-row-values__wrap']}>
         {checkOptions.map((value, i) => {
           return (
             // <Checkbox
@@ -48,9 +47,9 @@ export default function FilterGroup({
             // />
 
             <div key={value.id}>{value.label}</div>
-          );
+          )
         })}
       </div>
     </div>
-  );
+  )
 }

@@ -2,7 +2,6 @@ import classNames from "classnames";
 import { FilterProps } from "components/filter/Filter.type";
 import FilterGroup from "components/filter/FilterGroup";
 import useFilter from "hooks/useFilter";
-import { useTranslation } from "react-i18next";
 import styles from "./Filter.module.scss";
 
 export default function Filter({
@@ -12,7 +11,6 @@ export default function Filter({
   selectAllButton = false,
   showChips = false,
 }: FilterProps) {
-  const { t } = useTranslation();
   const {
     totalCount,
     updateFilterDatas,
@@ -52,7 +50,7 @@ export default function Filter({
                 className={styles.button}
                 onClick={() => onClickSelectAll(false)}
               >
-                {t("panel.filter.dropdown.clear")}
+                초기화
               </button>
             )}
 
@@ -62,7 +60,7 @@ export default function Filter({
                 className={styles.button}
                 onClick={() => onClickSelectAll(true)}
               >
-                {t("panel.filter.dropdown.select_all")}
+                전체 선택
               </button>
             )}
           </div>

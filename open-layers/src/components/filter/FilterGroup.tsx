@@ -47,7 +47,7 @@ export default function FilterGroup({
             //     disabled={filterOptions.disabled || value.disabled}
             // />
 
-            <div>{value.label}</div>
+            <div key={value.id}>{value.label}</div>
           );
         })}
       </div>

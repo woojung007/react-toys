@@ -1,6 +1,6 @@
 import useFilterChild from 'hooks/useFilterChild'
 import styles from './FilterGroup.module.scss'
-import { FilterGroupProps } from 'components/filter/FilterGroup.type'
+import { FilterGroupProps } from 'components/common/filter/FilterGroup.type'
 
 export default function FilterGroup({
   filterGroup,

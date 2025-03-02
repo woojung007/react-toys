@@ -1,11 +1,11 @@
-import FilterPage from "./pages/FilterPage";
+import MapPage from 'pages/MapPage'
 
 function App() {
   return (
     <>
-      <FilterPage />
+      <MapPage />
     </>
-  );
+  )
 }
 
-export default App;
+export default App

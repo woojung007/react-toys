@@ -1,6 +1,6 @@
 import classNames from 'classnames'
-import { FilterProps } from 'components/filter/Filter.type'
-import FilterGroup from 'components/filter/FilterGroup'
+import { FilterProps } from 'components/common/filter/Filter.type'
+import FilterGroup from 'components/common/filter/FilterGroup'
 import useFilter from 'hooks/useFilter'
 import styles from './Filter.module.scss'
 

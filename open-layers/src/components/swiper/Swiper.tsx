@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import styles from './Swiper.module.scss';
 import useLayerSwiper from 'hooks/useLayerSwiper';
 import { Map } from 'ol';
@@ -17,6 +17,8 @@ export default function Swiper({
   beforeTileLayerRef,
   isOpenPanel,
 }: Props) {
+  const [value, setValue] = useState(50); // 슬라이더 값 상태 관리
+
   const swipeRef = useRef<HTMLInputElement | null>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
@@ -48,20 +50,25 @@ export default function Swiper({
     };
   }, []);
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(Number(event.target.value));
+  };
+
   return (
     <div>
       {/* 세로선 */}
-      <div ref={trackRef} className={styles.trackLine}></div>
+      <div ref={trackRef} className={styles.trackLine} />
 
       {/* 스와이퍼 슬라이더 */}
       <input
-        className={styles.swiper}
+        onChange={handleChange}
+        className={styles.swiper__input}
         ref={swipeRef}
         id='swipe'
         type='range'
         min='0'
         max='100'
-        defaultValue='50'
+        value={value}
       />
     </div>
   );

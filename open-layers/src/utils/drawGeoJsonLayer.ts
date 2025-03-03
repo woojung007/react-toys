@@ -6,7 +6,11 @@ import Fill from 'ol/style/Fill';
 import Stroke from 'ol/style/Stroke';
 import { LayerProperties } from 'types/property';
 
-export function drawGeoJsonLayer(path: string, properties: LayerProperties) {
+export function drawGeoJsonLayer(
+  path: string,
+  properties: LayerProperties,
+  colors?: { fillColor: string; strokeColor: string }
+) {
   const vectorSource = new VectorSource({
     url: path,
     format: new GeoJSON(),
@@ -17,10 +21,11 @@ export function drawGeoJsonLayer(path: string, properties: LayerProperties) {
     source: vectorSource,
     style: new Style({
       fill: new Fill({
-        color: 'rgba(8, 0, 255, 0.4)',
+        color: colors?.fillColor || 'rgba(8, 0, 255, 0.4)',
       }),
       stroke: new Stroke({
-        color: 'rgb(8, 0, 255)',
+        color: colors?.strokeColor || 'rgb(8, 0, 255)',
+        width: 2,
       }),
     }),
   });

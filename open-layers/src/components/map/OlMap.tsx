@@ -33,11 +33,30 @@ export default function OlMap() {
       info: '변화탐지 토지',
     });
 
+    // 2023년 타일 레이어
+    const beforeTileLayer = drawGeoJsonLayer(
+      '/data/land-korea.geojson',
+      {
+        layerId: 'beforeTile',
+        info: '2023년 타일',
+      },
+      { fillColor: 'rgb(0, 255, 102)', strokeColor: 'rgb(0, 255, 102)' }
+    );
+
+    // 2024년 타일 레이어
+    const afterTileLayer = drawGeoJsonLayer(
+      '/data/land-korea.geojson',
+      {
+        layerId: 'afterTile',
+        info: '2024년 타일',
+      },
+      { fillColor: 'rgb(255, 174, 0)', strokeColor: 'rgb(255, 174, 0)' }
+    );
+
     // 2) OpenLayers Map 생성
     const mapObject = new Map({
       target: 'map',
-      // layers: [osmTileLayer],
-      layers: [backgroundLayer, landLayer],
+      layers: [backgroundLayer, landLayer, beforeTileLayer, afterTileLayer],
       view: new View({
         // center: [0,0], // EPSG:3857 기준
         center: fromLonLat([127, 37]), // EPSG:3857 변환된 대략 한반도 중심

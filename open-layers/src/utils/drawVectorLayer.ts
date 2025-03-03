@@ -11,7 +11,8 @@ import { LayerProperties } from 'types/property';
 export function drawVectorLayer(
   olMap: Map,
   coords: Coordinate[],
-  properties: LayerProperties
+  properties: LayerProperties,
+  colors?: { fillColor: string; strokeColor: string }
 ) {
   const feature = new Feature({
     geometry: new Polygon([coords]),
@@ -28,10 +29,10 @@ export function drawVectorLayer(
     source: source,
     style: new Style({
       fill: new Fill({
-        color: 'rgba(255, 0, 0, 0.4)',
+        color: colors?.fillColor || 'rgba(255, 0, 0, 0.4)',
       }),
       stroke: new Stroke({
-        color: 'rgba(255, 0, 0, 1)',
+        color: colors?.strokeColor || 'rgba(255, 0, 0, 1)',
         width: 2,
       }),
     }),

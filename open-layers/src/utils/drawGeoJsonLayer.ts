@@ -5,10 +5,13 @@ import Style from 'ol/style/Style';
 import Fill from 'ol/style/Fill';
 import Stroke from 'ol/style/Stroke';
 import { LayerProperties } from 'types/property';
+import { Map } from 'ol';
 
 export function drawGeoJsonLayer(
+  olMap: Map,
   path: string,
   properties: LayerProperties,
+  zIndex: number,
   colors?: { fillColor: string; strokeColor: string }
 ) {
   const vectorSource = new VectorSource({
@@ -29,5 +32,8 @@ export function drawGeoJsonLayer(
       }),
     }),
   });
+
+  vectorLayer.setZIndex(zIndex);
+  olMap.addLayer(vectorLayer);
   return vectorLayer;
 }

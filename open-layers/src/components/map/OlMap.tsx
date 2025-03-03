@@ -29,42 +29,52 @@ export default function OlMap() {
       }),
     });
 
-    // 토지 레이어
-    const landLayer = drawGeoJsonLayer('/data/land-korea.geojson', {
-      layerId: 'changeDetection',
-      info: '변화탐지 토지',
-    });
-
-    // 2023년 타일 레이어
-    const beforeTileLayer = drawGeoJsonLayer(
-      '/data/land-korea.geojson',
-      {
-        layerId: 'beforeTile',
-        info: '2023년 타일',
-      },
-      { fillColor: 'rgb(0, 255, 102)', strokeColor: 'rgb(0, 255, 102)' }
-    );
-
-    // 2024년 타일 레이어
-    const afterTileLayer = drawGeoJsonLayer(
-      '/data/land-korea.geojson',
-      {
-        layerId: 'afterTile',
-        info: '2024년 타일',
-      },
-      { fillColor: 'rgb(255, 174, 0)', strokeColor: 'rgb(255, 174, 0)' }
-    );
-
     // 2) OpenLayers Map 생성
     const mapObject = new Map({
       target: 'map',
-      layers: [backgroundLayer, landLayer, afterTileLayer, beforeTileLayer],
+      layers: [backgroundLayer],
       view: new View({
         // center: [0,0], // EPSG:3857 기준
         center: fromLonLat([127, 37]), // EPSG:3857 변환된 대략 한반도 중심
         zoom: 7,
       }),
     });
+
+    // 2023년 타일 레이어
+    const beforeTileLayer = drawGeoJsonLayer(
+      mapObject,
+      '/data/land-korea.geojson',
+      {
+        layerId: 'beforeTile',
+        info: '2023년 타일',
+      },
+      100,
+      { fillColor: 'rgb(0, 255, 102)', strokeColor: 'rgb(0, 255, 102)' }
+    );
+
+    // 2024년 타일 레이어
+    drawGeoJsonLayer(
+      mapObject,
+      '/data/land-korea.geojson',
+      {
+        layerId: 'afterTile',
+        info: '2024년 타일',
+      },
+      99,
+      { fillColor: 'rgb(255, 174, 0)', strokeColor: 'rgb(255, 174, 0)' }
+    );
+
+    // 토지 레이어
+    drawGeoJsonLayer(
+      mapObject,
+      '/data/land-korea.geojson',
+      {
+        layerId: 'changeDetection',
+        info: '변화탐지 토지',
+      },
+      10,
+      { fillColor: 'rgba(8, 0, 255, 0.4)', strokeColor: 'rgb(8, 0, 255)' }
+    );
 
     // 경기도 인근에 해당하는 경·위도 사각형 예시
     // (126.8, 37.4) ~ (127.2, 37.8) 대략 범위
@@ -75,13 +85,18 @@ export default function OlMap() {
       fromLonLat([126.8, 37.8]),
       fromLonLat([126.8, 37.4]),
     ];
-    // 빌딩 레이어
-    drawVectorLayer(mapObject, buildingCoords, {
-      layerId: 'building',
-      info: '변화탐지 빌딩',
-    });
+    drawVectorLayer(
+      mapObject,
+      buildingCoords,
+      {
+        layerId: 'building',
+        info: '변화탐지 빌딩 폴리곤',
+      },
+      110,
+      { fillColor: 'rgba(255, 0, 0, 0.4)', strokeColor: 'rgba(255, 0, 0, 1)' }
+    );
 
-    // 5) Swipe(슬라이더) 적용
+    // Swipe(슬라이더) 적용
     // const swipe = document.getElementById('swipe') as HTMLInputElement;
     if (!swipeRef.current) return;
     swipeLayer(swipeRef.current, mapObject, beforeTileLayer);

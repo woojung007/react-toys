@@ -1,26 +1,19 @@
-import Panel from 'components/panel/Panel';
-import styles from './MapPage.module.scss';
 import OlMap from 'components/map/OlMap';
-import { useLayoutEffect, useRef, useState } from 'react';
+import Panel from 'components/panel/Panel';
+import { useRef, useState } from 'react';
+import styles from './MapPage.module.scss';
 
 export default function MapPage() {
   const sidePanelRef = useRef<HTMLDivElement>(null);
-  const [panelWidth, setPanelWidth] = useState(0);
+  const [isOpenPanel, setIsOpen] = useState(true);
 
-  // 초기 렌더 후 실제 DOM이 준비된 시점에 측정
-  useLayoutEffect(() => {
-    if (sidePanelRef.current) {
-      const width = sidePanelRef.current.getBoundingClientRect().width;
-      // const width = sidePanelRef.current?.offsetWidth;
-      setPanelWidth(width);
-    }
-  }, []); // TODO: isOpen이 바뀔 때마다 측정
-
-  console.log('panelWidth:', panelWidth);
   return (
     <div className={styles.container}>
-      <Panel sidePanelRef={sidePanelRef} />
-      <OlMap panelWidth={panelWidth} />
+      {isOpenPanel && <Panel sidePanelRef={sidePanelRef} />}
+      <button onClick={() => setIsOpen(prev => !prev)}>
+        {isOpenPanel ? '접기' : '열기'}
+      </button>
+      <OlMap sidePanelRef={sidePanelRef} isOpenPanel={isOpenPanel} />
     </div>
   );
 }

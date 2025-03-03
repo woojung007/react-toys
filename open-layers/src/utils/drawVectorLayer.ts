@@ -39,10 +39,4 @@ export function drawVectorLayer(
 
   // 6) 맵에 추가
   olMap.addLayer(layer);
-
-  // 7) 폴리곤이 화면에 잘 보이도록 fit
-  olMap.getView().fit(feature.getGeometry()!.getExtent(), {
-    padding: [50, 50, 50, 50],
-    duration: 1000,
-  });
 }

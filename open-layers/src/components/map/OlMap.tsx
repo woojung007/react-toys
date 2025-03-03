@@ -5,7 +5,7 @@ import 'ol/ol.css';
 import { fromLonLat } from 'ol/proj';
 import XYZ from 'ol/source/XYZ';
 import { useEffect, useRef } from 'react';
-import { drawGeoJson } from 'utils/drawGeoJson';
+import { drawGeoJsonLayer } from 'utils/drawGeoJsonLayer';
 import { drawVectorLayer } from 'utils/drawVectorLayer';
 import styles from './OlMap.module.scss';
 import { Coordinate } from 'ol/coordinate';
@@ -28,7 +28,7 @@ export default function OlMap() {
     });
 
     // 토지 레이어
-    const landLayer = drawGeoJson('/data/land-korea.geojson', {
+    const landLayer = drawGeoJsonLayer('/data/land-korea.geojson', {
       layerId: 'changeDetection',
       info: '변화탐지 토지',
     });

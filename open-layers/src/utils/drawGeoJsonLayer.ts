@@ -6,7 +6,7 @@ import Fill from 'ol/style/Fill';
 import Stroke from 'ol/style/Stroke';
 import { LayerProperties } from 'types/property';
 
-export function drawGeoJson(path: string, properties: LayerProperties) {
+export function drawGeoJsonLayer(path: string, properties: LayerProperties) {
   const vectorSource = new VectorSource({
     url: path,
     format: new GeoJSON(),

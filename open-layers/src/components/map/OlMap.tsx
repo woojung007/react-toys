@@ -9,7 +9,11 @@ import { drawVectorLayerByGeoJson } from 'utils/drawVectorLayerByGeoJson';
 import { swipeLayer } from 'utils/swipeLayer';
 import styles from './OlMap.module.scss';
 
-export default function OlMap() {
+type OlMapProps = {
+  panelWidth: number;
+};
+
+export default function OlMap({ panelWidth }: OlMapProps) {
   const mapRef = useRef<Map | null>(null);
   const swipeRef = useRef<HTMLInputElement | null>(null);
 
@@ -98,7 +102,7 @@ export default function OlMap() {
     // Swipe(슬라이더) 적용
     // const swipe = document.getElementById('swipe') as HTMLInputElement;
     if (!swipeRef.current) return;
-    swipeLayer(swipeRef.current, mapObject, beforeTileLayer);
+    swipeLayer(swipeRef.current, mapObject, beforeTileLayer, panelWidth);
 
     mapRef.current = mapObject;
     (window as any).layers = mapObject.getAllLayers();

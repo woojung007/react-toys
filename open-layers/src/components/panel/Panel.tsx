@@ -1,11 +1,16 @@
-import PanelFilter from 'components/panel/filter/PanelFilter'
-import styles from './Panel.module.scss'
+import PanelFilter from 'components/panel/filter/PanelFilter';
+import styles from './Panel.module.scss';
+import { RefObject } from 'react';
 
-export default function Panel() {
+type PanelProps = {
+  sidePanelRef: RefObject<HTMLDivElement>;
+};
+
+export default function Panel({ sidePanelRef }: PanelProps) {
   return (
-    <section className={styles.panel}>
+    <div ref={sidePanelRef} className={styles.panel}>
       panel
       <PanelFilter />
-    </section>
-  )
+    </div>
+  );
 }

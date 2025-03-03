@@ -8,6 +8,7 @@ import { useEffect, useRef } from 'react';
 import { drawGeoJson } from 'utils/drawGeoJson';
 import { drawVectorLayer } from 'utils/drawVectorLayer';
 import styles from './OlMap.module.scss';
+import { Coordinate } from 'ol/coordinate';
 
 export default function OlMap() {
   const mapRef = useRef<Map | null>(null);
@@ -44,8 +45,17 @@ export default function OlMap() {
       }),
     });
 
+    // 경기도 인근에 해당하는 경·위도 사각형 예시
+    // (126.8, 37.4) ~ (127.2, 37.8) 대략 범위
+    const buildingCoords: Coordinate[] = [
+      fromLonLat([126.8, 37.4]),
+      fromLonLat([127.2, 37.4]),
+      fromLonLat([127.2, 37.8]),
+      fromLonLat([126.8, 37.8]),
+      fromLonLat([126.8, 37.4]),
+    ];
     // 빌딩 레이어
-    drawVectorLayer(mapObject, {
+    drawVectorLayer(mapObject, buildingCoords, {
       layerId: 'building',
       info: '변화탐지 빌딩',
     });

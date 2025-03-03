@@ -60,10 +60,11 @@
   background: transparent;
   margin: 0;
   border: none;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  outline: none;
+  // TODO: 주석 제거
+  // appearance: none;
+  // -webkit-appearance: none;
+  // -moz-appearance: none;
+  // outline: none;
 
   &:focus {
     outline: none;

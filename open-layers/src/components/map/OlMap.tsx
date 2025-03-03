@@ -67,7 +67,7 @@ export default function OlMap() {
     // 변화탐지 결과 레이어
     drawVectorLayerByGeoJson(
       mapObject,
-      '/data/change-detection.geojson',
+      '/data/change_detection.geojson',
       {
         layerId: 'change_detection',
         info: '변화탐지 결과',
@@ -83,7 +83,7 @@ export default function OlMap() {
     // 빌딩마스크 레이어
     drawVectorLayerByGeoJson(
       mapObject,
-      '/data/building-mask.geojson',
+      '/data/building_mask.geojson',
       {
         layerId: 'building_mask',
         info: '빌딩마스크',

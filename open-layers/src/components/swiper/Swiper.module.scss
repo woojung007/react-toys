@@ -36,18 +36,16 @@
     position: relative;
     z-index: 20;
   }
+}
 
-  /* 세로선 (thumb과 함께 이동) */
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: var(--thumb-position, 50%); /* JS에서 동적으로 업데이트 */
-    width: 4px;
-    height: 100%;
-    background-color: rgba(255, 255, 255);
-    transform: translateX(-50%);
-    z-index: 15;
-    transition: left 0.1s linear;
-  }
+/* 세로선 (thumb과 함께 이동) */
+.trackLine {
+  position: absolute;
+  top: 0;
+  left: 50%; /* 초기 위치 */
+  width: 4px;
+  height: 100%;
+  background-color: rgba(255, 255, 255);
+  transform: translateX(-50%);
+  z-index: 15;
 }

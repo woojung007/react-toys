@@ -68,12 +68,18 @@ export default function Swiper({
       const sliderValue = Number(slider.value);
 
       const mapWidth = mapSize[0];
+      // 궁금함
       const visibleWidth = (mapWidth * sliderValue) / 100;
       console.log(panelWidth);
 
       ctx.save();
       ctx.beginPath();
-      ctx.rect(0, 0, visibleWidth, ctx.canvas.height);
+      ctx.rect(
+        visibleWidth,
+        0,
+        ctx.canvas.width - visibleWidth,
+        ctx.canvas.height
+      );
       ctx.clip();
     };
 

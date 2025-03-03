@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import useLayerSwiper from 'hooks/useLayerSwiper';
 import { Map, View } from 'ol';
 import { Layer } from 'ol/layer';
 import TileLayer from 'ol/layer/Tile';
 import 'ol/ol.css';
 import { fromLonLat } from 'ol/proj';
 import XYZ from 'ol/source/XYZ';
-import { RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef } from 'react';
 import { drawVectorLayerByGeoJson } from 'utils/drawVectorLayerByGeoJson';
 import styles from './OlMap.module.scss';
 
@@ -19,19 +20,14 @@ export default function OlMap({ sidePanelRef, isOpenPanel }: OlMapProps) {
   const swipeRef = useRef<HTMLInputElement | null>(null);
   const beforeTileLayerRef = useRef<Layer>(null);
 
-  const [panelWidth, setPanelWidth] = useState(0);
-
-  useEffect(() => {
-    console.log('panel:', panelWidth);
-  }, [panelWidth]);
-
-  // 초기 렌더 후 실제 DOM이 준비된 시점에 측정
-  useLayoutEffect(() => {
-    if (sidePanelRef.current) {
-      const width = sidePanelRef.current.getBoundingClientRect().width;
-      setPanelWidth(width);
-    }
-  }, [isOpenPanel]);
+  // Swipe(슬라이더) 적용
+  useLayerSwiper({
+    sidePanelRef,
+    mapRef,
+    swipeRef,
+    beforeTileLayerRef,
+    isOpenPanel,
+  });
 
   useEffect(() => {
     // 이미 맵이 있다면 재생성 방지
@@ -120,58 +116,6 @@ export default function OlMap({ sidePanelRef, isOpenPanel }: OlMapProps) {
     (window as any).layers = mapObject.getAllLayers();
   }, []);
 
-  // Swipe(슬라이더) 적용
-  useEffect(() => {
-    if (!mapRef.current) return;
-    if (!swipeRef.current) return;
-    if (!beforeTileLayerRef.current) return;
-
-    const map = mapRef.current;
-    const slider = swipeRef.current;
-    const topLayer = beforeTileLayerRef.current;
-
-    console.log('열림?', isOpenPanel);
-
-    // 슬라이더 값 변경 시 지도 다시 그리기
-    const renderMap = () => {
-      map.render();
-    };
-
-    // 1) prerender 핸들러
-    const handlePreRender = (event: any) => {
-      const ctx = event.context;
-      const mapSize = map.getSize();
-      if (!mapSize) return;
-
-      const sliderValue = Number(slider.value);
-      const mapWidth = mapSize[0];
-      const visibleWidth = (mapWidth * sliderValue) / 100;
-
-      ctx.save();
-      ctx.beginPath();
-      ctx.rect(0, 0, visibleWidth + panelWidth, ctx.canvas.height);
-      ctx.clip();
-    };
-
-    // 2) postrender 핸들러
-    const handlePostRender = (event: any) => {
-      const ctx = event.context;
-      ctx.restore();
-    };
-
-    // event listener 등록
-    slider.addEventListener('input', renderMap);
-    topLayer.on('prerender', handlePreRender);
-    topLayer.on('postrender', handlePostRender);
-
-    // cleanup 함수
-    return () => {
-      slider.removeEventListener('input', renderMap);
-      topLayer.un('prerender', handlePreRender);
-      topLayer.un('postrender', handlePostRender);
-    };
-  }, [panelWidth]);
-
   useEffect(() => {
     if (mapRef.current) {
       console.log(mapRef.current.getAllLayers());
@@ -214,38 +158,3 @@ export default function OlMap({ sidePanelRef, isOpenPanel }: OlMapProps) {
 //   110,
 //   { fillColor: 'rgba(255, 0, 0, 0.4)', strokeColor: 'rgba(255, 0, 0, 1)' }
 // );
-
-// // Swipe(슬라이더) 적용
-// useEffect(() => {
-//   if (!mapRef.current) return;
-//   if (!swipeRef.current) return;
-//   if (!beforeTileLayerRef.current) return;
-
-//   console.log('열림?', isOpenPanel);
-
-//   if (isOpenPanel) {
-//     const panelWidth =
-//       sidePanelRef.current?.getBoundingClientRect().width ?? 0;
-
-//     swipeLayer(
-//       swipeRef.current,
-//       mapRef.current,
-//       beforeTileLayerRef.current,
-//       panelWidth
-//     );
-//   } else {
-//     swipeLayer(
-//       swipeRef.current,
-//       mapRef.current,
-//       beforeTileLayerRef.current,
-//       0
-//     );
-//   }
-
-//   // eslint-disable-next-line react-hooks/exhaustive-deps
-// }, [
-//   isOpenPanel,
-//   swipeRef.current,
-//   mapRef.current,
-//   beforeTileLayerRef.current,
-// ]);

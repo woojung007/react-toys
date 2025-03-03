@@ -1,7 +1,7 @@
-import { useEffect, useRef } from 'react';
-import useLayerSwiper from 'hooks/useLayerSwiper';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Map } from 'ol';
 import { Layer } from 'ol/layer';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styles from './Swiper.module.scss';
 
 type Props = {
@@ -24,14 +24,75 @@ export default function Swiper({
   const thumbRef = useRef<HTMLDivElement | null>(null);
   const isDraggingRef = useRef(false);
 
-  // 레이어를 clipping 함
-  useLayerSwiper({
-    sidePanelRef,
-    mapRef,
-    swipeRef,
-    beforeTileLayerRef,
-    isOpenPanel,
-  });
+  const [panelWidth, setPanelWidth] = useState(0);
+
+  // // 레이어를 clipping 함
+  // useLayerSwiper({
+  //   sidePanelRef,
+  //   mapRef,
+  //   swipeRef,
+  //   beforeTileLayerRef,
+  //   isOpenPanel,
+  // });
+
+  // 초기 렌더 후 실제 DOM이 준비된 시점에 측정
+  useLayoutEffect(() => {
+    if (sidePanelRef.current) {
+      const width = sidePanelRef.current.getBoundingClientRect().width;
+      setPanelWidth(width);
+    }
+  }, [isOpenPanel]);
+
+  useEffect(() => {
+    if (!mapRef.current) return;
+    if (!swipeRef.current) return;
+    if (!beforeTileLayerRef.current) return;
+
+    const map = mapRef.current;
+    const slider = swipeRef.current;
+    const topLayer = beforeTileLayerRef.current;
+
+    console.log('열림?', isOpenPanel);
+
+    // 슬라이더 값 변경 시 지도 다시 그리기
+    const renderMap = () => {
+      map.render();
+    };
+
+    // 1) prerender 핸들러
+    const handlePreRender = (event: any) => {
+      const ctx = event.context;
+      const mapSize = map.getSize();
+      if (!mapSize) return;
+
+      const sliderValue = Number(slider.value);
+      const mapWidth = mapSize[0];
+      const visibleWidth = (mapWidth * sliderValue) / 100;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, 0, visibleWidth + panelWidth, ctx.canvas.height);
+      ctx.clip();
+    };
+
+    // 2) postrender 핸들러
+    const handlePostRender = (event: any) => {
+      const ctx = event.context;
+      ctx.restore();
+    };
+
+    // event listener 등록
+    slider.addEventListener('input', renderMap);
+    topLayer.on('prerender', handlePreRender);
+    topLayer.on('postrender', handlePostRender);
+
+    // cleanup 함수
+    return () => {
+      slider.removeEventListener('input', renderMap);
+      topLayer.un('prerender', handlePreRender);
+      topLayer.un('postrender', handlePostRender);
+    };
+  }, [panelWidth]);
 
   // range input의 값에 따라 thumb와 track의 위치를 업데이트하는 함수
   const updateSlider = () => {
@@ -71,8 +132,13 @@ export default function Swiper({
     const newSliderValue = (newLeft / containerRect.width) * 100;
     swipeRef.current.value = newSliderValue.toString();
 
-    // input의 값이 변경되었을 때와 동일하게 slider 업데이트
+    // slider 업데이트 (thumb와 track 위치 조정)
     updateSlider();
+
+    // 지도 re-render 호출로 clipping 업데이트
+    if (mapRef.current) {
+      mapRef.current.render();
+    }
   };
 
   const handleThumbMouseUp = () => {

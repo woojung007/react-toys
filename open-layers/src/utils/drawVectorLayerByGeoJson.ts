@@ -7,7 +7,7 @@ import Stroke from 'ol/style/Stroke';
 import { LayerProperties } from 'types/property';
 import { Map } from 'ol';
 
-export function drawGeoJsonLayer(
+export function drawVectorLayerByGeoJson(
   olMap: Map,
   path: string,
   properties: LayerProperties,

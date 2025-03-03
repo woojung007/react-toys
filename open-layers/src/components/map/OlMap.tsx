@@ -5,7 +5,7 @@ import 'ol/ol.css';
 import { fromLonLat } from 'ol/proj';
 import XYZ from 'ol/source/XYZ';
 import { useEffect, useRef } from 'react';
-import { drawGeoJsonLayer } from 'utils/drawGeoJsonLayer';
+import { drawVectorLayerByGeoJson } from 'utils/drawVectorLayerByGeoJson';
 import { drawVectorLayer } from 'utils/drawVectorLayer';
 import styles from './OlMap.module.scss';
 import { Coordinate } from 'ol/coordinate';
@@ -41,7 +41,7 @@ export default function OlMap() {
     });
 
     // 2023년 타일 레이어
-    const beforeTileLayer = drawGeoJsonLayer(
+    const beforeTileLayer = drawVectorLayerByGeoJson(
       mapObject,
       '/data/land-korea.geojson',
       {
@@ -53,7 +53,7 @@ export default function OlMap() {
     );
 
     // 2024년 타일 레이어
-    drawGeoJsonLayer(
+    drawVectorLayerByGeoJson(
       mapObject,
       '/data/land-korea.geojson',
       {
@@ -65,7 +65,7 @@ export default function OlMap() {
     );
 
     // 토지 레이어
-    drawGeoJsonLayer(
+    drawVectorLayerByGeoJson(
       mapObject,
       '/data/land-korea.geojson',
       {

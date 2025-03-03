@@ -85,7 +85,7 @@
   }
 }
 
-/* 모든 브라우저에서 기본 thumb 스타일 제거 */
+/* 모든 브라우저에서 기본 thumb 스타일 제거 및 숨김 처리 */
 .range__input::-webkit-slider-thumb,
 .range__input::-moz-range-thumb,
 .range__input::-ms-thumb {
@@ -95,6 +95,10 @@
   -ms-appearance: none;
   outline: none;
   border: none;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* Edge, IE에서 기본 스타일 제거 */

@@ -122,7 +122,6 @@ export default function OlMap({ sidePanelRef, isOpenPanel }: OlMapProps) {
       {/* 지도 */}
       <div id='map' className={styles.map} />
 
-      {/* 스와이프용 슬라이더: 0 ~ 100 (left ~ right) */}
       <Swiper
         sidePanelRef={sidePanelRef}
         mapRef={mapRef}

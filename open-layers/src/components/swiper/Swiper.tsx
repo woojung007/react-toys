@@ -5,12 +5,14 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styles from './Swiper.module.scss';
 
 type Props = {
+  sidePanelRef: React.RefObject<HTMLDivElement>;
   mapRef: React.RefObject<Map>;
   beforeTileLayerRef: React.RefObject<Layer>;
   isOpenPanel: boolean;
 };
 
 export default function Swiper({
+  sidePanelRef,
   mapRef,
   beforeTileLayerRef,
   isOpenPanel,
@@ -21,10 +23,22 @@ export default function Swiper({
   const trackRef = useRef<HTMLDivElement | null>(null);
 
   // 드래그로 구한 swiper의 left 값 (px)
-  const [sliderLeft, setSliderLeft] = useState(0);
-  const isDraggingRef = useRef(false);
-  const startXRef = useRef(0);
-  const startLeftRef = useRef(0);
+  const [sliderLeft, setSliderLeft] = useState(0); // 현재 슬라이더의 왼쪽 위치(px)
+  const isDraggingRef = useRef(false); // 드래그가 진행중인지 여부를 나타내는 플래그
+  const startXRef = useRef(0); // 드래그가 시작될때의 마우스 X 좌표
+  const startLeftRef = useRef(0); // 드래그 시작시의 sliderLeft 값
+
+  const [panelWidth, setPanelWidth] = useState(400);
+
+  useEffect(() => {
+    if (!sidePanelRef.current) return;
+
+    if (isOpenPanel) {
+      setPanelWidth(sidePanelRef.current.getBoundingClientRect().width);
+    } else {
+      setPanelWidth(0);
+    }
+  }, [isOpenPanel]);
 
   // 초기에는 container의 중앙을 기준으로 설정
   useLayoutEffect(() => {
@@ -87,23 +101,22 @@ export default function Swiper({
     };
   }, [sliderLeft, mapRef]);
 
-  // map layer 클리핑: swiper의 left 값에 따라 clipping 영역 지정
+  // map layer 클리핑: swiper의 left 값, container의 절대 좌표, 패널 너비를 적용하여 clipping 영역 지정
   useEffect(() => {
     if (!mapRef.current || !beforeTileLayerRef.current || !containerRef.current)
       return;
-    const map = mapRef.current;
     const layer = beforeTileLayerRef.current;
-    const containerRect = containerRef.current.getBoundingClientRect();
 
     const handlePreRender = (event: any) => {
       const ctx = event.context;
+      // container의 절대 위치를 가져옴
+      const containerRect = containerRef.current!.getBoundingClientRect();
+      // swiper thumb의 실제 위치 계산: container의 left + sliderLeft에서 패널 너비를 빼줌
+      const absoluteSliderX = containerRect.left + sliderLeft - panelWidth;
+
       ctx.save();
       ctx.beginPath();
-      // container 기준 sliderLeft의 비율에 맞춰 map의 너비에서 clipping 영역 계산
-      const mapSize = map.getSize();
-      const mapWidth = mapSize ? mapSize[0] : containerRect.width;
-      const clipWidth = (sliderLeft / containerRect.width) * mapWidth;
-      ctx.rect(0, 0, clipWidth, ctx.canvas.height);
+      ctx.rect(0, 0, absoluteSliderX, ctx.canvas.height);
       ctx.clip();
     };
 
@@ -119,7 +132,7 @@ export default function Swiper({
       layer.un('prerender', handlePreRender);
       layer.un('postrender', handlePostRender);
     };
-  }, [sliderLeft, mapRef, beforeTileLayerRef]);
+  }, [sliderLeft, mapRef, beforeTileLayerRef, isOpenPanel]);
 
   return (
     <div
@@ -133,12 +146,3 @@ export default function Swiper({
     </div>
   );
 }
-
-// // 레이어를 clipping 함
-// useLayerSwiper({
-//   sidePanelRef,
-//   mapRef,
-//   swipeRef,
-//   beforeTileLayerRef,
-//   isOpenPanel,
-// });

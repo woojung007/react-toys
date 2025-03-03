@@ -4,7 +4,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Korean Peninsula (Approx.)"
+        "name": "Tile 2023"
       },
       "geometry": {
         "type": "Polygon",

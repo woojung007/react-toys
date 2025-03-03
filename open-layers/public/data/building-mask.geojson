@@ -1,0 +1,23 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "빌딩 마스크"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [126.9, 37.5],
+            [127.1, 37.5],
+            [127.1, 37.7],
+            [126.9, 37.7],
+            [126.9, 37.5]
+          ]
+        ]
+      }
+    }
+  ]
+}

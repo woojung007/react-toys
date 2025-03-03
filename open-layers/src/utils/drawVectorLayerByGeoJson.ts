@@ -31,9 +31,9 @@ export function drawVectorLayerByGeoJson(
         width: 2,
       }),
     }),
+    zIndex,
   });
 
-  vectorLayer.setZIndex(zIndex);
   olMap.addLayer(vectorLayer);
   return vectorLayer;
 }

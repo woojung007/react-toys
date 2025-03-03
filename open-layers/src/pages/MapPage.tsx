@@ -5,14 +5,16 @@ import styles from './MapPage.module.scss';
 
 export default function MapPage() {
   const sidePanelRef = useRef<HTMLDivElement>(null);
-  const [isOpenPanel, setIsOpen] = useState(true);
+  const [isOpenPanel, setIsOpenPanel] = useState(true);
 
   return (
     <div className={styles.container}>
-      {isOpenPanel && <Panel sidePanelRef={sidePanelRef} />}
-      <button onClick={() => setIsOpen(prev => !prev)}>
-        {isOpenPanel ? '접기' : '열기'}
-      </button>
+      <Panel
+        sidePanelRef={sidePanelRef}
+        isOpen={isOpenPanel}
+        setIsOpen={setIsOpenPanel}
+      />
+
       <OlMap sidePanelRef={sidePanelRef} isOpenPanel={isOpenPanel} />
     </div>
   );

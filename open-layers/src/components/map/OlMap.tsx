@@ -124,7 +124,11 @@ export default function OlMap({ sidePanelRef, isOpenPanel }: OlMapProps) {
   }, [mapRef.current]);
 
   return (
-    <section className={styles.map__container}>
+    <section
+      className={`${styles.map__container} ${
+        isOpenPanel ? '' : styles.collapsed
+      }`}
+    >
       <div id='map' className={styles.map} />
       {/* 스와이프용 슬라이더: 0 ~ 100 (left ~ right) */}
       <input

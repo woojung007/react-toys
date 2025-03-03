@@ -6,8 +6,11 @@
   min-width: 400px;
   height: 100%;
 
-  position: relative;
+  // position: relative;
   z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0; // 항상 왼쪽에 고정
 
   transform: translateX(0);
   transition: transform 0.3s ease-in-out;
@@ -17,6 +20,8 @@
   }
 
   .toggle__button {
+    z-index: 100;
+
     position: absolute;
     top: 50%;
     right: -36px;

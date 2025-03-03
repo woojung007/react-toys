@@ -1,10 +1,17 @@
 @use 'import' as *;
 
 .map__container {
-  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 400px; // 패널이 열려 있을 때 패널 오른쪽에 위치
+  width: calc(100% - 400px); // 기본적으로 패널이 열려 있을 때 크기
   height: 100%;
+  transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
 
-  position: relative;
+  &.collapsed {
+    left: 0; // 패널이 닫혔을 때 왼쪽으로 이동
+    width: 100%; // 전체 너비 사용
+  }
 
   .map {
     width: 100%;

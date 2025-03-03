@@ -123,15 +123,36 @@ export default function OlMap({ sidePanelRef, isOpenPanel }: OlMapProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapRef.current]);
 
+  useEffect(() => {
+    const updateThumbPosition = () => {
+      if (swipeRef.current) {
+        const value = swipeRef.current.value;
+        const percentage = (Number(value) / 100) * 100;
+        swipeRef.current.style.setProperty(
+          '--thumb-position',
+          `${percentage}%`
+        );
+      }
+    };
+
+    swipeRef.current?.addEventListener('input', updateThumbPosition);
+    return () => {
+      swipeRef.current?.removeEventListener('input', updateThumbPosition);
+    };
+  }, []);
+
   return (
     <section
       className={`${styles.map__container} ${
         isOpenPanel ? '' : styles.collapsed
       }`}
     >
+      {/* 지도 */}
       <div id='map' className={styles.map} />
+
       {/* 스와이프용 슬라이더: 0 ~ 100 (left ~ right) */}
       <input
+        className={styles.swiper}
         ref={swipeRef}
         id='swipe'
         type='range'

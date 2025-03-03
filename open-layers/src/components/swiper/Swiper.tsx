@@ -177,7 +177,10 @@ export default function Swiper({
 
   return (
     // containerRef를 부모 div에 부여하여 위치 계산의 기준으로 사용합니다.
-    <div className={styles.swiper} ref={containerRef}>
+    <div
+      ref={containerRef}
+      className={`${styles.swiper} ${isOpenPanel ? '' : styles.collapsed}`}
+    >
       {/* 배경 track line */}
       <div ref={trackRef} className={styles.trackLine} />
       {/* 커스텀 thumb (드래그 가능) */}

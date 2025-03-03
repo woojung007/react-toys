@@ -5,7 +5,7 @@ import styles from './MapPage.module.scss';
 
 export default function MapPage() {
   const sidePanelRef = useRef<HTMLDivElement>(null);
-  const [isOpenPanel, setIsOpenPanel] = useState(false);
+  const [isOpenPanel, setIsOpenPanel] = useState(true);
 
   return (
     <div className={styles.container}>

@@ -3,11 +3,19 @@
 .swiper {
   position: fixed;
   top: 0;
-  left: 0;
+  left: 400px;
   z-index: 999;
 
-  width: 100%;
+  border: 2px solid red;
+
+  width: calc(100% - 400px); // 기본적으로 패널이 열려 있을 때 크기
   height: 100%;
+  transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
+
+  &.collapsed {
+    left: 0; // 패널이 닫혔을 때 왼쪽으로 이동
+    width: 100%; // 전체 너비 사용
+  }
 }
 
 .trackLine {

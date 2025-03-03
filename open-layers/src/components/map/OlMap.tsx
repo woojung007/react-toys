@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import useLayerSwiper from 'hooks/useLayerSwiper';
+import Swiper from 'components/swiper/Swiper';
 import { Map, View } from 'ol';
 import { Layer } from 'ol/layer';
 import TileLayer from 'ol/layer/Tile';
@@ -17,17 +17,7 @@ type OlMapProps = {
 
 export default function OlMap({ sidePanelRef, isOpenPanel }: OlMapProps) {
   const mapRef = useRef<Map | null>(null);
-  const swipeRef = useRef<HTMLInputElement | null>(null);
   const beforeTileLayerRef = useRef<Layer>(null);
-
-  // Swipe(슬라이더) 적용
-  useLayerSwiper({
-    sidePanelRef,
-    mapRef,
-    swipeRef,
-    beforeTileLayerRef,
-    isOpenPanel,
-  });
 
   useEffect(() => {
     // 이미 맵이 있다면 재생성 방지
@@ -123,24 +113,6 @@ export default function OlMap({ sidePanelRef, isOpenPanel }: OlMapProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapRef.current]);
 
-  useEffect(() => {
-    const updateThumbPosition = () => {
-      if (swipeRef.current) {
-        const value = swipeRef.current.value;
-        const percentage = (Number(value) / 100) * 100;
-        swipeRef.current.style.setProperty(
-          '--thumb-position',
-          `${percentage}%`
-        );
-      }
-    };
-
-    swipeRef.current?.addEventListener('input', updateThumbPosition);
-    return () => {
-      swipeRef.current?.removeEventListener('input', updateThumbPosition);
-    };
-  }, []);
-
   return (
     <section
       className={`${styles.map__container} ${
@@ -151,14 +123,11 @@ export default function OlMap({ sidePanelRef, isOpenPanel }: OlMapProps) {
       <div id='map' className={styles.map} />
 
       {/* 스와이프용 슬라이더: 0 ~ 100 (left ~ right) */}
-      <input
-        className={styles.swiper}
-        ref={swipeRef}
-        id='swipe'
-        type='range'
-        min='0'
-        max='100'
-        defaultValue='50'
+      <Swiper
+        sidePanelRef={sidePanelRef}
+        mapRef={mapRef}
+        beforeTileLayerRef={beforeTileLayerRef}
+        isOpenPanel={isOpenPanel}
       />
     </section>
   );

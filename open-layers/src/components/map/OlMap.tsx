@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Swiper from 'components/swiper/Swiper';
+import MapSliderExample from 'components/swiper/Swiper2';
 import { Map, View } from 'ol';
 import { Layer } from 'ol/layer';
 import TileLayer from 'ol/layer/Tile';
@@ -121,13 +122,15 @@ export default function OlMap({ sidePanelRef, isOpenPanel }: OlMapProps) {
     >
       {/* 지도 */}
       <div id='map' className={styles.map} />
-
+      {/* 
       <Swiper
         sidePanelRef={sidePanelRef}
         mapRef={mapRef}
         beforeTileLayerRef={beforeTileLayerRef}
         isOpenPanel={isOpenPanel}
-      />
+      /> */}
+
+      <MapSliderExample />
     </section>
   );
 }

@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import styles from './TodoHeader.module.scss';
+import { memo } from 'react';
 
-export default function TodoHeader() {
+function TodoHeader() {
     const { t } = useTranslation();
 
     return (
@@ -11,3 +12,5 @@ export default function TodoHeader() {
         </div>
     );
 }
+
+export default memo(TodoHeader);

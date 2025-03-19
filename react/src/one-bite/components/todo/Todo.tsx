@@ -1,11 +1,10 @@
+import { TodoObject } from 'one-bite/components/todo/Todo.type';
 import TodoEditor from 'one-bite/components/todo/TodoEditor';
 import TodoHeader from 'one-bite/components/todo/TodoHeader';
 import TodoList from 'one-bite/components/todo/TodoList';
-import styles from './Todo.module.scss';
-import { useReducer, useRef, useState } from 'react';
-import { TodoObject } from 'one-bite/components/todo/Todo.type';
-import ReducerExam from 'one-bite/components/basic/ReducerExam';
+import { useCallback, useReducer, useRef } from 'react';
 import { changeLanguage } from 'utils/language';
+import styles from './Todo.module.scss';
 
 const mockData: TodoObject[] = [
     {
@@ -49,7 +48,7 @@ export default function Todo() {
     const [todos, dispatch] = useReducer(reducer, mockData);
     const idRef = useRef(3);
 
-    const onCreate = (content: string) => {
+    const onCreate = useCallback((content: string) => {
         // const newTodo = {
         //     id: idRef.current++,
         //     isDone: false,
@@ -57,7 +56,6 @@ export default function Todo() {
         //     date: new Date().getTime(),
         // };
         // setTodos((prev) => [newTodo, ...prev]);
-
         dispatch({
             type: 'CREATE',
             data: {
@@ -67,29 +65,27 @@ export default function Todo() {
                 date: new Date().getTime(),
             },
         });
-    };
+    }, []);
 
-    const onUpdate = (targetId: number) => {
+    const onUpdate = useCallback((targetId: number) => {
         // setTodos((prev) =>
         //     prev.map(
         //         (todo) => (todo.id === targetId ? { ...todo, isDone: !todo.isDone } : todo),
         //     ),
         // );
-
         dispatch({
             type: 'UPDATE',
             targetId: targetId,
         });
-    };
+    }, []);
 
-    const onDelete = (targetId: number) => {
+    const onDelete = useCallback((targetId: number) => {
         // setTodos((prev) => prev.filter((todo) => todo.id !== targetId));
-
         dispatch({
             type: 'DELETE',
             targetId: targetId,
         });
-    };
+    }, []);
 
     return (
         <div className={styles.todo_app}>

@@ -1,12 +1,10 @@
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useContext, useRef, useState } from 'react';
 import styles from './TodoEditor.module.scss';
 import { useTranslation } from 'react-i18next';
+import { TodoContext } from 'one-bite/components/todo/Todo';
 
-type Props = {
-    onCreate: (content: string) => void;
-};
-
-export default function TodoEditor({ onCreate }: Props) {
+export default function TodoEditor() {
+    const data = useContext(TodoContext);
     const { t } = useTranslation();
 
     const [content, setContent] = useState('');
@@ -21,7 +19,7 @@ export default function TodoEditor({ onCreate }: Props) {
             contentRef.current?.focus();
             return;
         }
-        onCreate(content);
+        data?.onCreate(content);
         setContent('');
     };
 

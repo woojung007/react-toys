@@ -1,21 +1,23 @@
 import { TodoObject } from 'one-bite/components/todo/Todo.type';
-import { memo } from 'react';
+import { memo, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './TodoItem.module.scss';
+import { TodoContext } from 'one-bite/components/todo/Todo';
 
 type Props = {
     todo: TodoObject;
-    onUpdate: (targetId: number) => void;
-    onDelete: (targetId: number) => void;
 };
-function TodoItem({ todo, onUpdate, onDelete }: Props) {
+
+function TodoItem({ todo }: Props) {
+    const data = useContext(TodoContext);
+
     const { t } = useTranslation();
 
     return (
         <div className={styles.todo_item}>
             <input
                 onChange={() => {
-                    onUpdate(todo.id);
+                    data?.onUpdate(todo.id);
                 }}
                 readOnly
                 checked={todo.isDone}
@@ -26,7 +28,7 @@ function TodoItem({ todo, onUpdate, onDelete }: Props) {
             <div className={styles.date}>{new Date(todo.date).toDateString()}</div>
             <button
                 onClick={() => {
-                    onDelete(todo.id);
+                    data?.onDelete(todo.id);
                 }}
             >
                 {t('todo.list.delete')}

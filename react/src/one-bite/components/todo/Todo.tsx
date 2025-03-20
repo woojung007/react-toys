@@ -2,7 +2,7 @@ import { TodoObject } from 'one-bite/components/todo/Todo.type';
 import TodoEditor from 'one-bite/components/todo/TodoEditor';
 import TodoHeader from 'one-bite/components/todo/TodoHeader';
 import TodoList from 'one-bite/components/todo/TodoList';
-import { useCallback, useReducer, useRef } from 'react';
+import { useCallback, useReducer, useRef, createContext } from 'react';
 import { changeLanguage } from 'utils/language';
 import styles from './Todo.module.scss';
 
@@ -42,6 +42,15 @@ function reducer(state: TodoObject[], action: { type: TodoAction; data?: TodoObj
             return state;
     }
 }
+
+type TodoContextType = {
+    todos: TodoObject[];
+    onCreate: (content: string) => void;
+    onUpdate: (targetId: number) => void;
+    onDelete: (targetId: number) => void;
+};
+
+export const TodoContext = createContext<TodoContextType | null>(null);
 
 export default function Todo() {
     // const [todos, setTodos] = useState<TodoObject[]>(mockData);
@@ -94,8 +103,17 @@ export default function Todo() {
                 <button onClick={() => changeLanguage('en')}>영어</button>
             </div>
             <TodoHeader />
-            <TodoEditor onCreate={onCreate} />
-            <TodoList todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
+            <TodoContext.Provider
+                value={{
+                    todos,
+                    onCreate,
+                    onUpdate,
+                    onDelete,
+                }}
+            >
+                <TodoEditor />
+                <TodoList />
+            </TodoContext.Provider>
 
             {/* <ReducerExam /> */}
         </div>

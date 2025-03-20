@@ -1,16 +1,11 @@
-import { TodoObject } from 'one-bite/components/todo/Todo.type';
+import { TodoContext } from 'one-bite/components/todo/Todo';
 import TodoItem from 'one-bite/components/todo/TodoItem';
-import { ChangeEvent, useMemo, useState } from 'react';
+import { ChangeEvent, useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './TodoList.module.scss';
 
-type Props = {
-    todos: TodoObject[];
-    onUpdate: (targetId: number) => void;
-    onDelete: (targetId: number) => void;
-};
-
-export default function TodoList({ todos, onUpdate, onDelete }: Props) {
+export default function TodoList() {
+    const data = useContext(TodoContext);
     const [search, setSearch] = useState('');
 
     const { t } = useTranslation();
@@ -21,16 +16,16 @@ export default function TodoList({ todos, onUpdate, onDelete }: Props) {
 
     const getFilteredData = () => {
         if (search === '') {
-            return todos;
+            return data?.todos;
         }
-        return todos.filter((todo) => todo.content.toLowerCase().includes(search.toLowerCase()));
+        return data?.todos.filter((todo) => todo.content.toLowerCase().includes(search.toLowerCase()));
     };
 
     const filteredTodos = getFilteredData();
 
     const { totalCount, doneCount, notDoneCOunt } = useMemo(() => {
-        const totalCount = todos.length;
-        const doneCount = todos.filter((todo) => todo.isDone).length;
+        const totalCount = data?.todos.length ?? 0;
+        const doneCount = data?.todos.filter((todo) => todo.isDone).length ?? 0;
         const notDoneCOunt = totalCount - doneCount;
 
         return {
@@ -38,7 +33,7 @@ export default function TodoList({ todos, onUpdate, onDelete }: Props) {
             doneCount,
             notDoneCOunt,
         };
-    }, [todos]);
+    }, [data?.todos]);
 
     return (
         <div className={styles.todo_list}>
@@ -57,8 +52,8 @@ export default function TodoList({ todos, onUpdate, onDelete }: Props) {
             <input value={search} onChange={onChangeSearch} type='text' placeholder={t('todo.list.placeholder')} />
 
             <div className={styles.todos_wrapper}>
-                {filteredTodos.map((todo) => (
-                    <TodoItem key={todo.id} todo={todo} onUpdate={onUpdate} onDelete={onDelete} />
+                {filteredTodos?.map((todo) => (
+                    <TodoItem key={todo.id} todo={todo} />
                 ))}
             </div>
         </div>

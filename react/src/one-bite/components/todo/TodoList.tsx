@@ -1,11 +1,11 @@
-import { TodoContext } from 'one-bite/components/todo/Todo';
 import TodoItem from 'one-bite/components/todo/TodoItem';
 import { ChangeEvent, useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './TodoList.module.scss';
+import { TodoStateContext } from 'one-bite/components/todo/Todo';
 
 export default function TodoList() {
-    const data = useContext(TodoContext);
+    const todos = useContext(TodoStateContext);
     const [search, setSearch] = useState('');
 
     const { t } = useTranslation();
@@ -16,16 +16,16 @@ export default function TodoList() {
 
     const getFilteredData = () => {
         if (search === '') {
-            return data?.todos;
+            return todos;
         }
-        return data?.todos.filter((todo) => todo.content.toLowerCase().includes(search.toLowerCase()));
+        return todos.filter((todo) => todo.content.toLowerCase().includes(search.toLowerCase()));
     };
 
     const filteredTodos = getFilteredData();
 
     const { totalCount, doneCount, notDoneCOunt } = useMemo(() => {
-        const totalCount = data?.todos.length ?? 0;
-        const doneCount = data?.todos.filter((todo) => todo.isDone).length ?? 0;
+        const totalCount = todos.length ?? 0;
+        const doneCount = todos.filter((todo) => todo.isDone).length ?? 0;
         const notDoneCOunt = totalCount - doneCount;
 
         return {
@@ -33,7 +33,7 @@ export default function TodoList() {
             doneCount,
             notDoneCOunt,
         };
-    }, [data?.todos]);
+    }, [todos]);
 
     return (
         <div className={styles.todo_list}>

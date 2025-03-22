@@ -2,14 +2,14 @@ import { TodoObject } from 'one-bite/components/todo/Todo.type';
 import { memo, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './TodoItem.module.scss';
-import { TodoContext } from 'one-bite/components/todo/Todo';
+import { TodoDispatchContext } from 'one-bite/components/todo/Todo';
 
 type Props = {
     todo: TodoObject;
 };
 
 function TodoItem({ todo }: Props) {
-    const data = useContext(TodoContext);
+    const data = useContext(TodoDispatchContext);
 
     const { t } = useTranslation();
 

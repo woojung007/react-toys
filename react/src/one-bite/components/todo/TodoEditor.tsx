@@ -1,10 +1,10 @@
 import { ChangeEvent, useContext, useRef, useState } from 'react';
 import styles from './TodoEditor.module.scss';
 import { useTranslation } from 'react-i18next';
-import { TodoContext } from 'one-bite/components/todo/Todo';
+import { TodoDispatchContext } from 'one-bite/components/todo/Todo';
 
 export default function TodoEditor() {
-    const data = useContext(TodoContext);
+    const data = useContext(TodoDispatchContext);
     const { t } = useTranslation();
 
     const [content, setContent] = useState('');

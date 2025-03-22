@@ -2,7 +2,7 @@ import { TodoObject } from 'one-bite/components/todo/Todo.type';
 import TodoEditor from 'one-bite/components/todo/TodoEditor';
 import TodoHeader from 'one-bite/components/todo/TodoHeader';
 import TodoList from 'one-bite/components/todo/TodoList';
-import { useCallback, useReducer, useRef, createContext } from 'react';
+import { useCallback, useReducer, useRef, createContext, useMemo } from 'react';
 import { changeLanguage } from 'utils/language';
 import styles from './Todo.module.scss';
 
@@ -43,14 +43,14 @@ function reducer(state: TodoObject[], action: { type: TodoAction; data?: TodoObj
     }
 }
 
-type TodoContextType = {
-    todos: TodoObject[];
+type TodoDispatchContextType = {
     onCreate: (content: string) => void;
     onUpdate: (targetId: number) => void;
     onDelete: (targetId: number) => void;
 };
 
-export const TodoContext = createContext<TodoContextType | null>(null);
+export const TodoStateContext = createContext<TodoObject[]>([]);
+export const TodoDispatchContext = createContext<TodoDispatchContextType | null>(null);
 
 export default function Todo() {
     // const [todos, setTodos] = useState<TodoObject[]>(mockData);
@@ -96,6 +96,14 @@ export default function Todo() {
         });
     }, []);
 
+    const memoizedDispatch = useMemo(() => {
+        return {
+            onCreate,
+            onUpdate,
+            onDelete,
+        };
+    }, []);
+
     return (
         <div className={styles.todo_app}>
             <div>
@@ -103,17 +111,12 @@ export default function Todo() {
                 <button onClick={() => changeLanguage('en')}>영어</button>
             </div>
             <TodoHeader />
-            <TodoContext.Provider
-                value={{
-                    todos,
-                    onCreate,
-                    onUpdate,
-                    onDelete,
-                }}
-            >
-                <TodoEditor />
-                <TodoList />
-            </TodoContext.Provider>
+            <TodoStateContext.Provider value={todos}>
+                <TodoDispatchContext.Provider value={memoizedDispatch}>
+                    <TodoEditor />
+                    <TodoList />
+                </TodoDispatchContext.Provider>
+            </TodoStateContext.Provider>
 
             {/* <ReducerExam /> */}
         </div>

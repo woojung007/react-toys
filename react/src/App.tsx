@@ -1,18 +1,17 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import Todo from 'one-bite/components/todo/Todo';
-import { RecoilRoot } from 'recoil';
-
-const queryClient = new QueryClient();
+import Diary from 'pages/Diary';
+import Home from 'pages/Home';
+import New from 'pages/New';
+import Notfound from 'pages/Notfound';
+import { Route, Routes } from 'react-router-dom';
 
 const App = () => {
     return (
-        <QueryClientProvider client={queryClient}>
-            <RecoilRoot>
-                <Todo />
-            </RecoilRoot>
-            <ReactQueryDevtools initialIsOpen={true} />
-        </QueryClientProvider>
+        <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/new' element={<New />} />
+            <Route path='/diary' element={<Diary />} />
+            <Route path='/*' element={<Notfound />} />
+        </Routes>
     );
 };
 

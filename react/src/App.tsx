@@ -24,7 +24,7 @@ const App = () => {
             <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/new' element={<New />} />
-                <Route path='/diary' element={<Diary />} />
+                <Route path='/diary/:diaryId' element={<Diary />} />
                 <Route path='/*' element={<Notfound />} />
             </Routes>
         </>

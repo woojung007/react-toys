@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'NanumPenScript';
+    src: url('../public/font/NanumPenScript-Regular.ttf');
+}
+
 html.dark {
     --color-bg-dark: #1a1c35;
     --color-bg: #22243b;
@@ -12,6 +17,10 @@ body {
         'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+body * {
+    font-family: 'NanumPenScript';
 }
 
 code {

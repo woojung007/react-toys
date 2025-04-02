@@ -1,7 +1,7 @@
-import Diary from 'pages/Diary';
-import Home from 'pages/Home';
-import New from 'pages/New';
-import Notfound from 'pages/Notfound';
+import Diary from 'pages/diary/Diary';
+import Home from 'pages/diary/Home';
+import New from 'pages/diary/New';
+import Notfound from 'pages/diary/Notfound';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import { getEmotionImage } from 'utils/get-emotion-image';
 import styles from './DiaryApp.module.scss';

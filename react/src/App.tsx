@@ -3,11 +3,7 @@ import Home from 'pages/Home';
 import New from 'pages/New';
 import Notfound from 'pages/Notfound';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
-import emotion1 from 'assets/emotions/emotion1.png';
-import emotion2 from 'assets/emotions/emotion2.png';
-import emotion3 from 'assets/emotions/emotion3.png';
-import emotion4 from 'assets/emotions/emotion4.png';
-import emotion5 from 'assets/emotions/emotion5.png';
+import { getEmotionImage } from 'utils/get-emotion-image';
 
 const App = () => {
     const navigate = useNavigate();
@@ -19,11 +15,11 @@ const App = () => {
     return (
         <>
             <div>
-                <img src={emotion1} alt='emotion1' />
-                <img src={emotion2} alt='emotion2' />
-                <img src={emotion3} alt='emotion3' />
-                <img src={emotion4} alt='emotion4' />
-                <img src={emotion5} alt='emotion5' />
+                <img src={getEmotionImage(1)} alt='emotion1' />
+                <img src={getEmotionImage(2)} alt='emotion2' />
+                <img src={getEmotionImage(3)} alt='emotion3' />
+                <img src={getEmotionImage(4)} alt='emotion4' />
+                <img src={getEmotionImage(5)} alt='emotion5' />
             </div>
             <div>
                 <Link to={'/'}>Home</Link>

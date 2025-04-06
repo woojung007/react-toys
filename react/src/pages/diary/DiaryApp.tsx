@@ -1,14 +1,44 @@
+import Button from 'one-bite/components/common/Button';
+import Header from 'one-bite/components/common/Header';
 import Diary from 'pages/diary/Diary';
+import Edit from 'pages/diary/Edit';
 import Home from 'pages/diary/Home';
 import New from 'pages/diary/New';
 import Notfound from 'pages/diary/Notfound';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import { getEmotionImage } from 'utils/get-emotion-image';
 import styles from './DiaryApp.module.scss';
-import Button from 'one-bite/components/common/Button';
-import Header from 'one-bite/components/common/Header';
+import { useReducer } from 'react';
+
+type DiaryData = {
+    id: number;
+    createdDate: number;
+    emotionId: number;
+    content: string;
+};
+
+const mockData: DiaryData[] = [
+    {
+        id: 1,
+        createdDate: new Date().getTime(),
+        emotionId: 1,
+        content: '1번 일기 내용',
+    },
+    {
+        id: 2,
+        createdDate: new Date().getTime(),
+        emotionId: 2,
+        content: '2번 일기 내용',
+    },
+];
+
+function reducer(state: DiaryData[], action: any) {
+    return state;
+}
 
 export default function DiaryApp() {
+    const [data, dispatch] = useReducer(reducer, mockData);
+
     const navigate = useNavigate();
 
     const onClickNewButton = () => {
@@ -50,6 +80,7 @@ export default function DiaryApp() {
                     <Route path='/' element={<Home />} />
                     <Route path='/new' element={<New />} />
                     <Route path='/diary/:diaryId' element={<Diary />} />
+                    <Route path='/edit/:diaryId' element={<Edit />} />
                     <Route path='/*' element={<Notfound />} />
                 </Routes>
             </div>

@@ -8,7 +8,7 @@ import Notfound from 'pages/diary/Notfound';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import { getEmotionImage } from 'utils/get-emotion-image';
 import styles from './DiaryApp.module.scss';
-import { useReducer } from 'react';
+import { useReducer, useRef } from 'react';
 
 type DiaryData = {
     id: number;
@@ -32,12 +32,25 @@ const mockData: DiaryData[] = [
     },
 ];
 
-function reducer(state: DiaryData[], action: any) {
-    return state;
+type DiaryReducerActionType = 'CREATE' | 'READ' | 'UPDATE' | 'DELETE';
+
+type DiaryReducerAction = {
+    type: DiaryReducerActionType;
+    data: DiaryData;
+};
+
+function reducer(state: DiaryData[], action: DiaryReducerAction) {
+    switch (action.type) {
+        case 'CREATE':
+            return [action.data, ...state];
+        default:
+            return state;
+    }
 }
 
 export default function DiaryApp() {
     const [data, dispatch] = useReducer(reducer, mockData);
+    const idRef = useRef<number>(3);
 
     const navigate = useNavigate();
 
@@ -48,6 +61,23 @@ export default function DiaryApp() {
     const onClickButton = () => {
         console.log('123 버튼 클릭');
     };
+
+    // 새로운 일기 추가
+    const onCreate = (createdDate: number, emotionId: number, content: string) => {
+        dispatch({
+            type: 'CREATE',
+            data: {
+                id: idRef.current++,
+                createdDate,
+                emotionId,
+                content,
+            },
+        });
+    };
+
+    // 기존 일기 수정
+
+    // 기존 일기 삭제
 
     return (
         <div className={styles.diary__app}>

@@ -8,13 +8,13 @@ import Notfound from 'pages/diary/Notfound';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import { getEmotionImage } from 'utils/get-emotion-image';
 import styles from './DiaryApp.module.scss';
-import { useReducer, useRef } from 'react';
+import { createContext, useReducer, useRef } from 'react';
 
 type DiaryData = {
     id: number;
-    createdDate: number;
-    emotionId: number;
-    content: string;
+    createdDate?: number;
+    emotionId?: number;
+    content?: string;
 };
 
 const mockData: DiaryData[] = [
@@ -43,13 +43,21 @@ function reducer(state: DiaryData[], action: DiaryReducerAction) {
     switch (action.type) {
         case 'CREATE':
             return [action.data, ...state];
+        case 'UPDATE':
+            return state.map((item) => (String(item.id) === String(action.data.id) ? action.data : item));
+        case 'DELETE':
+            return state.filter((item) => String(item.id) !== String(action.data.id));
         default:
             return state;
     }
 }
 
+const DiaryStateContext = createContext(mockData);
+const DiaryDispatchContext = createContext({});
+
 export default function DiaryApp() {
     const [data, dispatch] = useReducer(reducer, mockData);
+
     const idRef = useRef<number>(3);
 
     const navigate = useNavigate();
@@ -76,8 +84,27 @@ export default function DiaryApp() {
     };
 
     // 기존 일기 수정
+    const onUpdate = (id: number, createdDate: number, emotionId: number, content: string) => {
+        dispatch({
+            type: 'UPDATE',
+            data: {
+                id,
+                createdDate,
+                emotionId,
+                content,
+            },
+        });
+    };
 
     // 기존 일기 삭제
+    const onDelete = (id: number) => {
+        dispatch({
+            type: 'DELETE',
+            data: {
+                id,
+            },
+        });
+    };
 
     return (
         <div className={styles.diary__app}>
@@ -106,13 +133,23 @@ export default function DiaryApp() {
 
                 <button onClick={onClickNewButton}>New 페이지로 이동</button>
 
-                <Routes>
-                    <Route path='/' element={<Home />} />
-                    <Route path='/new' element={<New />} />
-                    <Route path='/diary/:diaryId' element={<Diary />} />
-                    <Route path='/edit/:diaryId' element={<Edit />} />
-                    <Route path='/*' element={<Notfound />} />
-                </Routes>
+                <DiaryStateContext.Provider value={data}>
+                    <DiaryDispatchContext.Provider
+                        value={{
+                            onCreate,
+                            onUpdate,
+                            onDelete,
+                        }}
+                    >
+                        <Routes>
+                            <Route path='/' element={<Home />} />
+                            <Route path='/new' element={<New />} />
+                            <Route path='/diary/:diaryId' element={<Diary />} />
+                            <Route path='/edit/:diaryId' element={<Edit />} />
+                            <Route path='/*' element={<Notfound />} />
+                        </Routes>
+                    </DiaryDispatchContext.Provider>
+                </DiaryStateContext.Provider>
             </div>
         </div>
     );

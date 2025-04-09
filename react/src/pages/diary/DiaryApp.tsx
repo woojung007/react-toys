@@ -109,30 +109,6 @@ export default function DiaryApp() {
     return (
         <div className={styles.diary__app}>
             <div className={styles.diary__root}>
-                <Header
-                    title='Header'
-                    leftChild={<Button type='DEFAULT' text='Left' onClick={() => {}} />}
-                    rightChild={<Button type='DEFAULT' text='Right' onClick={() => {}} />}
-                />
-                <div>
-                    <img src={getEmotionImage(1)} alt='emotion1' />
-                    <img src={getEmotionImage(2)} alt='emotion2' />
-                    <img src={getEmotionImage(3)} alt='emotion3' />
-                    <img src={getEmotionImage(4)} alt='emotion4' />
-                    <img src={getEmotionImage(5)} alt='emotion5' />
-                </div>
-                <div>
-                    <Link to={'/'}>Home</Link>
-                    <Link to={'/new'}>New</Link>
-                    <Link to={'/diary'}>Diary</Link>
-                </div>
-
-                <Button text={'123'} onClick={onClickButton} type={'DEFAULT'} />
-                <Button text={'123'} onClick={onClickButton} type={'POSITIVE'} />
-                <Button text={'123'} onClick={onClickButton} type={'NEGATIVE'} />
-
-                <button onClick={onClickNewButton}>New 페이지로 이동</button>
-
                 <DiaryStateContext.Provider value={data}>
                     <DiaryDispatchContext.Provider
                         value={{

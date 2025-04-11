@@ -1,20 +1,45 @@
 import Button from 'one-bite/components/common/Button';
 import styles from './DiaryItem.module.scss';
 import { getEmotionImage } from 'utils/get-emotion-image';
+import { DiaryData } from 'pages/diary/DiaryApp';
+import { useNavigate } from 'react-router-dom';
 
-export default function DiaryItem() {
-    const emotionId = 1;
+type Props = {
+    diary: DiaryData;
+};
+
+export default function DiaryItem({ diary }: Props) {
+    const navigate = useNavigate();
+
     return (
         <div className={styles.DiaryItem}>
-            <div className={`${styles.img_section} ${styles[`img_section_${emotionId}`]}`}>
-                <img src={getEmotionImage(1)} alt='emotion' />
+            <div
+                onClick={() => navigate(`/diary/${diary.id}`)}
+                className={`${styles.img_section} ${
+                    styles[`img_section_${diary.emotionId || 1}`]
+                }`}
+            >
+                <img
+                    src={getEmotionImage(diary.emotionId || 1)}
+                    alt='emotion'
+                />
             </div>
-            <div className={styles.info_section}>
-                <div className={styles.created_date}>{new Date().toLocaleDateString()}</div>
-                <div className={styles.content}>일기 컨텐츠</div>
+            <div
+                onClick={() => navigate(`/diary/${diary.id}`)}
+                className={styles.info_section}
+            >
+                <div className={styles.created_date}>
+                    {diary.createdDate &&
+                        new Date(diary.createdDate).toLocaleDateString()}
+                </div>
+                <div className={styles.content}>{diary.content}</div>
             </div>
             <div className={styles.button_section}>
-                <Button text='수정하기' onClick={() => {}} type='DEFAULT' />
+                <Button
+                    text='수정하기'
+                    onClick={() => navigate(`/edit/${diary.id}`)}
+                    type='DEFAULT'
+                />
             </div>
         </div>
     );

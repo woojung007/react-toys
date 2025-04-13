@@ -2,8 +2,8 @@ import styles from './Header.module.scss';
 
 type Props = {
     title: string;
-    leftChild: React.ReactNode;
-    rightChild: React.ReactNode;
+    leftChild?: React.ReactNode;
+    rightChild?: React.ReactNode;
 };
 
 export default function Header({ title, leftChild, rightChild }: Props) {

@@ -1,4 +1,4 @@
-import Button from 'one-bite/components/common/Button';
+import Button from 'one-bite/components/diary/Button';
 import styles from './DiaryList.module.scss';
 import DiaryItem from 'one-bite/components/diary/DiaryItem';
 import { DiaryData } from 'pages/diary/DiaryApp';

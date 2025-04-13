@@ -1,4 +1,4 @@
-import Button from 'one-bite/components/common/Button';
+import Button from 'one-bite/components/diary/Button';
 import styles from './DiaryItem.module.scss';
 import { getEmotionImage } from 'utils/get-emotion-image';
 import { DiaryData } from 'pages/diary/DiaryApp';

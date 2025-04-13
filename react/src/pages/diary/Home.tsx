@@ -1,5 +1,5 @@
-import Button from 'one-bite/components/common/Button';
-import Header from 'one-bite/components/common/Header';
+import Button from 'one-bite/components/diary/Button';
+import Header from 'one-bite/components/diary/Header';
 import DiaryList from 'one-bite/components/diary/DiaryList';
 import { DiaryData, DiaryStateContext } from 'pages/diary/DiaryApp';
 import { useContext, useState } from 'react';

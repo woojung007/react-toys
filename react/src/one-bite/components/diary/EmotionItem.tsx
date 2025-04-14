@@ -5,17 +5,17 @@ import styles from './EmotionItem.module.scss';
 type Props = {
     emotion: Emotion;
     isSelected: boolean;
-    onClickEmotion: (emotionId: number) => void;
+    onClick: () => void;
 };
 
 export default function EmotionItem({
     emotion: { emotionId, emotionName },
     isSelected,
-    onClickEmotion,
+    onClick,
 }: Props) {
     return (
         <div
-            onClick={() => onClickEmotion(emotionId)}
+            onClick={onClick}
             className={`${styles.EmotionItem} ${
                 isSelected && styles[`on_${emotionId}`]
             }`}

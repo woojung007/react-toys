@@ -59,8 +59,21 @@ function reducer(state: DiaryData[], action: DiaryReducerAction) {
     }
 }
 
-export const DiaryStateContext = createContext(mockData);
-export const DiaryDispatchContext = createContext({});
+type DiaryDispatchContextType = {
+    onCreate: (createdDate: number, emotionId: number, content: string) => void;
+    onUpdate: (
+        id: number,
+        createdDate: number,
+        emotionId: number,
+        content: string,
+    ) => void;
+    onDelete: (id: number) => void;
+};
+
+export const DiaryStateContext = createContext<DiaryData[]>([]);
+export const DiaryDispatchContext = createContext<
+    DiaryDispatchContextType | undefined
+>(undefined);
 
 export default function DiaryApp() {
     const [data, dispatch] = useReducer(reducer, mockData);
@@ -113,16 +126,16 @@ export default function DiaryApp() {
     };
 
     return (
-        <div className={styles.diary__app}>
-            <div className={styles.diary__root}>
-                <DiaryStateContext.Provider value={data}>
-                    <DiaryDispatchContext.Provider
-                        value={{
-                            onCreate,
-                            onUpdate,
-                            onDelete,
-                        }}
-                    >
+        <DiaryStateContext.Provider value={data}>
+            <DiaryDispatchContext.Provider
+                value={{
+                    onCreate,
+                    onUpdate,
+                    onDelete,
+                }}
+            >
+                <div className={styles.diary__app}>
+                    <div className={styles.diary__root}>
                         <Routes>
                             <Route path='/' element={<Home />} />
                             <Route path='/new' element={<New />} />
@@ -130,9 +143,9 @@ export default function DiaryApp() {
                             <Route path='/edit/:diaryId' element={<Edit />} />
                             <Route path='/*' element={<Notfound />} />
                         </Routes>
-                    </DiaryDispatchContext.Provider>
-                </DiaryStateContext.Provider>
-            </div>
-        </div>
+                    </div>
+                </div>
+            </DiaryDispatchContext.Provider>
+        </DiaryStateContext.Provider>
     );
 }

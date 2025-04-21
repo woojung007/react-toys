@@ -1,8 +1,9 @@
 import EmotionItem from 'one-bite/components/diary/EmotionItem';
 import styles from './Editor.module.scss';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import Button from 'one-bite/components/diary/Button';
 import { useNavigate } from 'react-router-dom';
+import { DiaryData } from 'pages/diary/DiaryApp';
 
 export type Emotion = {
     emotionId: number;
@@ -55,7 +56,9 @@ export type EditorInput = {
 
 type Props = {
     onSubmit: (input: EditorInput) => void;
+    initData: DiaryData | undefined;
 };
+
 type CustomEventType = {
     target: {
         name: string;
@@ -63,7 +66,7 @@ type CustomEventType = {
     };
 };
 
-export default function Editor({ onSubmit }: Props) {
+export default function Editor({ onSubmit, initData }: Props) {
     const [input, setInput] = useState<EditorInput>({
         createdDate: new Date(),
         emotionId: 3,
@@ -71,6 +74,17 @@ export default function Editor({ onSubmit }: Props) {
     });
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (initData) {
+            setInput({
+                ...initData,
+                emotionId: initData.emotionId || 1,
+                content: initData.content || '',
+                createdDate: new Date(Number(initData.createdDate)),
+            });
+        }
+    }, [initData]);
 
     const onChangeInput = (
         e: ChangeEvent<HTMLInputElement> | CustomEventType,
@@ -127,6 +141,7 @@ export default function Editor({ onSubmit }: Props) {
             <section className={styles.content_section}>
                 <h4>오늘의 일기</h4>
                 <textarea
+                    value={input.content}
                     name='content'
                     onChange={onChangeInput}
                     placeholder='오늘은 어땠나요?'

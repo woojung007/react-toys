@@ -1,12 +1,9 @@
+import useDiary from 'hooks/useDiary';
 import Button from 'one-bite/components/diary/Button';
 import Header from 'one-bite/components/diary/Header';
-import {
-    DiaryData,
-    DiaryDispatchContext,
-    DiaryStateContext,
-} from 'pages/diary/DiaryApp';
+import { DiaryDispatchContext } from 'pages/diary/DiaryApp';
 import Editor, { EditorInput } from 'pages/diary/Editor';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 export default function Edit() {
@@ -14,9 +11,8 @@ export default function Edit() {
     const navigate = useNavigate();
 
     const dispatchContext = useContext(DiaryDispatchContext);
-    const data = useContext(DiaryStateContext);
 
-    const [currentDiaryItem, setCurrentDiaryItem] = useState<DiaryData>();
+    const currentDiaryItem = useDiary(params?.diaryId || '');
 
     const onClickDelete = () => {
         if (window.confirm('일기를 정말 삭제할까요? 다시 복구되지 않아요!')) {
@@ -25,24 +21,6 @@ export default function Edit() {
             navigate('/', { replace: true });
         }
     };
-
-    const getCurrentDiaryItem = () => {
-        const currentDiaryItem = data.find(
-            (item) => String(item.id) === String(params.diaryId),
-        );
-
-        if (!currentDiaryItem) {
-            window.alert('존재하지 않는 일기입니다.');
-            navigate('/', { replace: true });
-        }
-
-        return currentDiaryItem;
-    };
-
-    useEffect(() => {
-        const currentDiaryItem = getCurrentDiaryItem();
-        setCurrentDiaryItem(currentDiaryItem);
-    }, [params.diaryId]);
 
     const onSubmit = (input: EditorInput) => {
         if (!params) return;

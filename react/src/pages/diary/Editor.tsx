@@ -4,48 +4,12 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import Button from 'one-bite/components/diary/Button';
 import { useNavigate } from 'react-router-dom';
 import { DiaryData } from 'pages/diary/DiaryApp';
+import { emotionList } from 'constants/emotions';
+import { getStringedDate } from 'utils/get-stringed-date';
 
 export type Emotion = {
     emotionId: number;
     emotionName: string;
-};
-
-const emotionList: Emotion[] = [
-    {
-        emotionId: 1,
-        emotionName: '완전 좋음',
-    },
-    {
-        emotionId: 2,
-        emotionName: '좋음',
-    },
-    {
-        emotionId: 3,
-        emotionName: '그럭저럭',
-    },
-    {
-        emotionId: 4,
-        emotionName: '나쁨',
-    },
-    {
-        emotionId: 5,
-        emotionName: '끔찍함',
-    },
-];
-
-// 날짜 -> YYYY-MM-DD
-export const getStringedDate = (targetDate: Date) => {
-    let year = String(targetDate.getFullYear());
-    let month = String(targetDate.getMonth() + 1);
-    let date = String(targetDate.getDate());
-
-    if (Number(month) < 10) {
-        month = `0${month}`;
-    }
-    if (Number(date) < 10) {
-        date = `0${date}`;
-    }
-    return `${year}-${month}-${date}`;
 };
 
 export type EditorInput = {

@@ -3,6 +3,7 @@ import Header from 'one-bite/components/diary/Header';
 import DiaryList from 'one-bite/components/diary/DiaryList';
 import { DiaryData, DiaryStateContext } from 'pages/diary/DiaryApp';
 import { useContext, useState } from 'react';
+import usePageTitle from 'hooks/usePageTitle';
 
 const getMonthlyData = (pivotDate: Date, data: DiaryData[]) => {
     const beginTIme = new Date(
@@ -35,6 +36,7 @@ export default function Home() {
     const [pivotDate, setPivotDate] = useState(new Date());
 
     const monthlyData = getMonthlyData(pivotDate, data);
+    usePageTitle('감정 일기장');
 
     const onIncreaseMonth = () => {
         setPivotDate(

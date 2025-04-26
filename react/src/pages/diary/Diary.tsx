@@ -1,4 +1,5 @@
 import useDiary from 'hooks/useDiary';
+import usePageTitle from 'hooks/usePageTitle';
 import Button from 'one-bite/components/diary/Button';
 import Header from 'one-bite/components/diary/Header';
 import Viewer from 'one-bite/components/diary/Viewer';
@@ -10,6 +11,7 @@ export default function Diary() {
     const params = useParams();
 
     const currentDiary = useDiary(params?.diaryId || '');
+    usePageTitle(`${params?.diaryId}번 일기`);
 
     if (!currentDiary) {
         return <div>데이터 로딩중 ... </div>;

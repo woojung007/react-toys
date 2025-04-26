@@ -1,4 +1,5 @@
 import useDiary from 'hooks/useDiary';
+import usePageTitle from 'hooks/usePageTitle';
 import Button from 'one-bite/components/diary/Button';
 import Header from 'one-bite/components/diary/Header';
 import { DiaryDispatchContext } from 'pages/diary/DiaryApp';
@@ -11,8 +12,8 @@ export default function Edit() {
     const navigate = useNavigate();
 
     const dispatchContext = useContext(DiaryDispatchContext);
-
     const currentDiaryItem = useDiary(params?.diaryId || '');
+    usePageTitle(`${params?.diaryId}번 일기 수정`);
 
     const onClickDelete = () => {
         if (window.confirm('일기를 정말 삭제할까요? 다시 복구되지 않아요!')) {

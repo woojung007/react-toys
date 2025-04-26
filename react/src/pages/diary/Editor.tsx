@@ -20,7 +20,7 @@ export type EditorInput = {
 
 type Props = {
     onSubmit: (input: EditorInput) => void;
-    initData: DiaryData | undefined;
+    initData?: DiaryData;
 };
 
 type CustomEventType = {

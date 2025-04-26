@@ -1,3 +1,4 @@
+import usePageTitle from 'hooks/usePageTitle';
 import Button from 'one-bite/components/diary/Button';
 import Header from 'one-bite/components/diary/Header';
 import { DiaryDispatchContext } from 'pages/diary/DiaryApp';
@@ -9,6 +10,7 @@ export default function New() {
     const navigate = useNavigate();
 
     const dispatchContext = useContext(DiaryDispatchContext);
+    usePageTitle('새 일기 쓰기');
 
     const onSubmit = (input: EditorInput) => {
         dispatchContext?.onCreate(
@@ -20,6 +22,7 @@ export default function New() {
             replace: true, // 뒤로 가기 방지
         });
     };
+
     return (
         <div>
             <Header
